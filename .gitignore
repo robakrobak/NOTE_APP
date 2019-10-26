@@ -124,9 +124,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
-bartosz.txt
-arek.txt
-pawel.txt
-paulina.txt
-radek.txt
+# .idea
+.idea
