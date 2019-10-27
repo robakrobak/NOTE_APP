@@ -1,2 +1,0 @@
-jest zmiana
-moja druga zmiana
