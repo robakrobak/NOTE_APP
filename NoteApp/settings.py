@@ -12,17 +12,17 @@ SECRET_KEY = 'k751f+%yaj7@u7cys_l5^__)kg#1pl0ie6i3_b37134i-6zx_5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-BASE_DIR = os.path.join(
-   os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+NEW_BASE_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'NOTE_APP/'
 )
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(NEW_BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(NEW_BASE_DIR, 'media/')
 
 # Application definition
 
@@ -112,6 +112,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
