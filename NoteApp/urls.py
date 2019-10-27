@@ -17,14 +17,12 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
+from user.views import signup
 
 
-from core.views import background_test
-
-app_name = 'NoteApp'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url('background_test/', background_test),
+    url(r'^signup/$', signup, name='signup'),
 ]
 
 
