@@ -1,8 +1,12 @@
-
+# python
+from user.forms import SignUpForm
+from core.email_service import confirms_registration
+# django
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
-from user.forms import SignUpForm
+from django.core.mail import send_mail
 
 
 def login_view(request):
@@ -15,6 +19,7 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
 
 #
 # def logout_view(request):
@@ -30,9 +35,10 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            email = form.cleaned_data.get('email')
             login(request, user)
-            return redirect('home')
+            confirms_registration(email, username, raw_password)
+            return redirect('/home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
-

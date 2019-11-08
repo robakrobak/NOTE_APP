@@ -19,12 +19,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from user.views import signup
 from user.views import login_view
-
+from core.views import home
+from django.urls import include
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
-      url(r'^signup/$', signup, name='signup'),
+    url(r'^signup/$', signup, name='signup'),
+    url('home/', home),
+
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
