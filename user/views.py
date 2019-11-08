@@ -2,11 +2,11 @@
 from user.forms import SignUpForm
 from core.email_service import confirms_registration
 # django
-from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
-from django.core.mail import send_mail
+
 
 
 def login_view(request):
