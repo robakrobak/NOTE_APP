@@ -2,11 +2,11 @@
 from user.forms import SignUpForm
 from core.email_service import confirms_registration
 # django
-from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
-from django.core.mail import send_mail
+
 
 
 def login_view(request):
@@ -15,7 +15,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return render(request, 'index.html', {'form': form})
+            return redirect('home')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
