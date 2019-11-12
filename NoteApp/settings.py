@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'note',
     'user',
     'bootstrap3',
-    'send',
+    # 'send', może lepiej sprawdzić czy jest aplikacja send bo mi wywala błąd
 ]
 
 MIDDLEWARE = [
