@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!<br>
+  You see that because you are logged in
+{% else %}
+  <p>The home container when not logged in</p>
+{% endif %}
+{% endblock %}

@@ -19,10 +19,10 @@ NEW_BASE_DIR = os.path.join(
 )
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(NEW_BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(NEW_BASE_DIR, '/static/')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(NEW_BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(NEW_BASE_DIR, '/media/')
 
 # Application definition
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'core',
     'note',
     'user',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
@@ -115,3 +116,4 @@ USE_TZ = True
 # STATIC_URL = '/static/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
