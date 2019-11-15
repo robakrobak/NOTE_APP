@@ -20,13 +20,14 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from user.views import signup
 from user.views import login_view
-from core.views import home
+from core.views import home, logout_view
 from django.urls import include
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),
+    url(r'^logout/$', logout_view, name='logout'),
     url(r'^$', home, name='home'),
     url(r'^password_reset/$', auth_views.PasswordResetView.as_view(template_name = 'password_reset_form.html'), name='password_reset'),
     url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name = 'password_reset_done.html'), name='password_reset_done'),
