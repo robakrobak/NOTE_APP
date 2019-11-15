@@ -11,6 +11,9 @@ met the deadline or not.
 
 Python
 Django framework
+SQLITE
+BOOTSTRAP
+HTML
 
 3. Launch
 
