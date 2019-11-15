@@ -31,10 +31,10 @@ NEW_BASE_DIR = os.path.join(
 # awatars photo directory
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(NEW_BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(NEW_BASE_DIR, '/static/')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(NEW_BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(NEW_BASE_DIR, '/media/')
 
 # Application definition
 
@@ -48,8 +48,7 @@ INSTALLED_APPS = [
     'core',
     'note',
     'user',
-    'bootstrap3',
-    # 'send', może lepiej sprawdzić czy jest aplikacja send bo mi wywala błąd
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 # STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
