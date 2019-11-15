@@ -14,7 +14,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home/')
+            return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -36,7 +36,7 @@ def signup(request):
             email = form.cleaned_data.get('email')
             login(request, user)
             confirms_registration(email, username, raw_password)
-            return redirect('/home')
+            return redirect('/')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
