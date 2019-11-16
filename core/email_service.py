@@ -13,4 +13,9 @@ def confirms_registration(email, username, password):
     send_mail(subject, message, from_email, to_list, fail_silently=False)
 
 
-
+def password_reset_fail(email):
+    subject = 'NoteApp password reset'
+    message = 'You have no account in our service.\n\n Sincerely, \n The NoteApp Team'
+    from_email = EMAIL_HOST_USER
+    to_list = [email, ]
+    send_mail(subject, message, from_email, to_list, fail_silently=False)
