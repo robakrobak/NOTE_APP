@@ -2,6 +2,7 @@
 from user.forms import SignUpForm
 from core.email_service import confirms_registration, password_reset_fail
 # django
+
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, User
@@ -40,7 +41,6 @@ def signup(request):
 def user_profile(request):
     return render(request, 'user_profile.html', {})
 
-
 class PasswordResetView2(PasswordResetView):
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
@@ -60,3 +60,4 @@ class PasswordResetView2(PasswordResetView):
         else:
             password_reset_fail(email)
         return super().form_valid(form)
+
