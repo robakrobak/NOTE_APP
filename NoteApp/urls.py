@@ -21,9 +21,11 @@ from django.contrib.auth import views as auth_views
 from user.views import signup
 from user.views import login_view
 from core.views import home, logout_view
+from note.views import note
 from django.urls import include
 
 urlpatterns = [
+    url(r'^note/$', note, name='note'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),

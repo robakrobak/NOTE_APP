@@ -1,3 +1,7 @@
-from django.shortcuts import render
+# django
+from django.shortcuts import redirect, render
+from note.models import Note
 
-# Create your views here.
+
+def note(request):
+    return render(request, "note.html", {'notes': Note.objects.all()})

@@ -2,7 +2,6 @@
 from user.forms import SignUpForm
 from core.email_service import confirms_registration
 # django
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
@@ -18,11 +17,6 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
-
-#
-# def logout_view(request):
-#     logout(request)
-#     pass
 
 
 def signup(request):
@@ -40,3 +34,8 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+def userprofile(request):
+    render(request, "userprofile.html", {})
+
