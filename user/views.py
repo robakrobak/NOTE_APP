@@ -2,7 +2,6 @@
 from user.forms import SignUpForm
 from core.email_service import confirms_registration
 # django
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import redirect, render
@@ -39,3 +38,4 @@ def signup(request):
 
 def user_profile(request):
     return render(request, 'user_profile.html', {})
+

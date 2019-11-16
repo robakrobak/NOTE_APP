@@ -20,8 +20,11 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from user.views import signup, login_view, user_profile
 from core.views import home, logout_view
+from note.views import note
+
 
 urlpatterns = [
+    url(r'^note/$', note, name='note'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),
