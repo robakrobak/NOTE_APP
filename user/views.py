@@ -36,6 +36,6 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-def userprofile(request):
-    render(request, "userprofile.html", {})
+def user_profile(request):
+    return render(request, 'user_profile.html', {})
 
