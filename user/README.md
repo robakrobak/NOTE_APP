@@ -7,6 +7,7 @@ User can simply create notes and assign other users to it. Also, the user can se
 met the deadline or not.
 
 ####Technologies
+
 * Python 3.7 -  (https://www.python.org)
 * Django 2.2 - (https://www.djangoproject.com)
 * SQLite - (https://www.sqlite.org)
