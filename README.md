@@ -18,4 +18,4 @@ met the deadline or not.
 
 Via Internet browser.
 
-    Product: Junior Python Developer Team Poznań
+    Product: Junior Python Developer Team Poznan
