@@ -49,9 +49,14 @@ INSTALLED_APPS = [
     'user',
     'bootstrap4',
     'crispy_forms',
+    'bootstrap_datepicker_plus',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
