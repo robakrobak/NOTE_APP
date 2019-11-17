@@ -1,3 +1,4 @@
+
 # python
 from note.models import Note
 # django

@@ -1,13 +1,13 @@
-# python
-from user.forms import SignUpForm, UserProfileForm
-from core.email_service import confirms_registration, password_reset_fail
 # django
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, User
+from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import redirect, render
 from user.models import UserProfile
+# python
+from core.email_service import confirms_registration, password_reset_fail
+from user.forms import SignUpForm, UserProfileForm
 
 
 def login_view(request):
@@ -59,7 +59,7 @@ class PasswordResetView2(PasswordResetView):
             password_reset_fail(email)
         return super().form_valid(form)
 
-
+      
 class UserProfile(UpdateView):
     model = UserProfile
     form_class = UserProfileForm

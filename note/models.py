@@ -1,4 +1,5 @@
 from django.db import models
+
 from user.models import User
 
 
@@ -8,7 +9,7 @@ class Note(models.Model):
     add_date = models.DateTimeField(auto_now_add=True, null=False)
     created_by = models.ForeignKey(User, default=None, blank=False, on_delete=models.CASCADE, null=True,
                                    related_name='note_creator')
-    deadline = models.DateField(null=False, blank=False)
+    deadline = models.DateTimeField(null=False, blank=False)
     is_done = models.BooleanField(default=False, blank=False)
     id_users = models.ManyToManyField(User, blank=True, related_name='users_pinned_to_note')
 

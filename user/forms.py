@@ -20,9 +20,8 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
 
-
+        
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('user', 'awatar', 'about_me', 'location', 'birth_date')
-

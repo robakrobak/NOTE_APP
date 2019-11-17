@@ -1,10 +1,10 @@
 # django
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import redirect, render
+from django.shortcuts import render
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from note.forms import NoteForm
 # python
 from note.models import Note
-from note.forms import NoteForm
 
 
 def note(request):

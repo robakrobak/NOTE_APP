@@ -1,12 +1,31 @@
-Paweł Przychodzeń 12:20 PM
 {% extends 'index.html' %}
 {% load crispy_forms_tags %}
+<!--{{ form.media }}-->
 {% load bootstrap4 %}
-{% block title %}add note{% endblock %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+
 {% block content %}
-<form method="post" novalidate>
-  {% csrf_token %}
-  {{ form|crispy }}
-  <button type="submit" class="btn btn-primary">Create Note</button>
-</form>
+<head>
+
+</head>
+<body>
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="card">
+        <div class="card-body">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form|crispy }}
+
+            <button type="submit" class="btn btn-primary">Create Note</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 {% endblock %}
+
