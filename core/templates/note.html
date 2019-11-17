@@ -9,10 +9,11 @@
     <li>Note id: {{note.id|upper}}</li>
     <li>Created on: {{note.add_date|date:'Y-m-d' }}</li>
     <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
-    <li>Note status: {{is_done|upper}}</li>
+    <li>Note status: {{ note.is_done|yesno:"Is open,Is done" }}</li>
     <li>Note title: {{note.title|upper}}</li>
     <li>Note: {{note.note|upper}}</li>
     <h6> </h6>
     {% endfor %}
 </ul>
 {% endblock %}
+

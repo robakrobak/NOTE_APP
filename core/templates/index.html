@@ -54,7 +54,9 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Change password</a>
-                            <a class="dropdown-item" href="{% url 'user_profile' %}">User profile</a>
+                            {% if user.pk %}
+                            <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">User profile</a>
+                            {% endif %}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
                         </div>
