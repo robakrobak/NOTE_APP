@@ -129,3 +129,5 @@ dmypy.json
 
 #media
 media/
+
+pycache
