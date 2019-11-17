@@ -1,0 +1,12 @@
+Paweł Przychodzeń 12:20 PM
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+{% block title %}add note{% endblock %}
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Create Note</button>
+</form>
+{% endblock %}
