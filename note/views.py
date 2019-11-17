@@ -1,7 +1,7 @@
 # django
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from note.forms import NoteForm
 # python
 from note.models import Note
@@ -11,7 +11,9 @@ def note(request):
     return render(request, "note.html", {'notes': Note.objects.all()})
 
 
-class NoteCreateView(CreateView):
+class NoteCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/'
+    redirect_field_name = 'home'
     model = Note
     form_class = NoteForm
     success_url = "/note"

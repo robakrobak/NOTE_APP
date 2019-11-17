@@ -1,10 +1,13 @@
+# django
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, User
 from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import redirect, render
-
+from user.models import UserProfile
+# python
 from core.email_service import confirms_registration, password_reset_fail
-from user.forms import SignUpForm
+from user.forms import SignUpForm, UserProfileForm
 
 
 def login_view(request):
@@ -36,10 +39,6 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-def user_profile(request):
-    return render(request, 'user_profile.html', {})
-
-
 class PasswordResetView2(PasswordResetView):
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
@@ -59,3 +58,11 @@ class PasswordResetView2(PasswordResetView):
         else:
             password_reset_fail(email)
         return super().form_valid(form)
+
+      
+class UserProfile(UpdateView):
+    model = UserProfile
+    form_class = UserProfileForm
+    success_url = "/user_profile"
+    template_name = "user_profile.html"
+    # add permission for users, so everyone can not change others profile

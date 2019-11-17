@@ -4,9 +4,22 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!<br>
-  You see that because you are logged in
+Hi {{ user.username }}!<br>
+<h1>Notes</h1>
+<h2>List of notes</h2>
+<h2>Number of notes: {{notes|length}} </h2>
+<ul>
+    {% for note in notes %}
+    <li>Note id: {{note.id|upper}}</li>
+    <li>Created on: {{note.add_date|date:'Y-m-d' }}</li>
+    <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
+    <li>Note status: {{is_done|upper}}</li>
+    <li>Note title: {{note.title|upper}}</li>
+    <li>Note: {{note.note|upper}}</li>
+    <h6></h6>
+    {% endfor %}
+</ul>
 {% else %}
-  <p>The home container when not logged in</p>
+<p>The home container when not logged in</p>
 {% endif %}
 {% endblock %}
