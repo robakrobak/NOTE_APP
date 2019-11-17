@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from user.views import signup, login_view, user_profile, PasswordResetView2
 from core.views import home, logout_view
-from note.views import note
+from note.views import note, NoteCreateView
 
 
 urlpatterns = [
@@ -36,6 +36,7 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(template_name = 'password_reset_confirm.html'), name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name = 'password_reset_complete.html'), name='password_reset_complete'),
     url(r'^user_profile/$', user_profile, name='user_profile'),
+    url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
