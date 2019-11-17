@@ -19,9 +19,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from user.views import signup, login_view, UserProfile, PasswordResetView2
-from core.views import home, logout_view
 from django.urls import path
-from note.views import note
+from core.views import NotesListView, logout_view
+from note.views import note, NoteCreateView
+
 
 
 urlpatterns = [
@@ -30,13 +31,14 @@ urlpatterns = [
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),
     url(r'^logout/$', logout_view, name='logout'),
-    url(r'^$', home, name='home'),
+    url(r'^$', NotesListView.as_view(), name='home'),
     url(r'^password_reset/$', PasswordResetView2.as_view(template_name = 'password_reset_form.html'), name='password_reset'),
     url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name = 'password_reset_done.html'), name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.PasswordResetConfirmView.as_view(template_name = 'password_reset_confirm.html'), name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name = 'password_reset_complete.html'), name='password_reset_complete'),
     path('user_profile/<int:pk>/', UserProfile.as_view(), name='user_profile'),
+    url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
