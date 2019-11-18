@@ -9,7 +9,7 @@ User._meta.get_field('email')._unique = True
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     awatar = models.FileField(upload_to='awatar')
     about_me = models.CharField(max_length=512)
     location = models.CharField(max_length=30, blank=True)

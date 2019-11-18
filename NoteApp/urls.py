@@ -19,15 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
-from user.views import signup, login_view, UserProfile, PasswordResetView2
+from user.views import signup, login_view, UserProfileModel, PasswordResetView2
 from django.urls import path
 from core.views import NotesListView, logout_view
-from note.views import note, NoteCreateView
-from user.views import signup, login_view, user_profile, PasswordResetView2
+from note.views import NoteCreateView
 
 
 urlpatterns = [
-    url(r'^note/$', note, name='note'),
+    # url(r'^note/$', note, name='note'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),

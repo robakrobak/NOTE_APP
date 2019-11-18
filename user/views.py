@@ -8,6 +8,7 @@ from user.models import UserProfile
 # python
 from core.email_service import confirms_registration, password_reset_fail
 from user.forms import SignUpForm, UserProfileForm
+from user.models import UserProfile
 
 
 def login_view(request):
@@ -31,6 +32,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             email = form.cleaned_data.get('email')
+            UserProfile.objects.create(user=user)
             login(request, user)
             confirms_registration(email, username, raw_password)
             return redirect('/')
@@ -60,7 +62,7 @@ class PasswordResetView2(PasswordResetView):
         return super().form_valid(form)
 
       
-class UserProfile(UpdateView):
+class UserProfileModel(UpdateView):
     model = UserProfile
     form_class = UserProfileForm
     success_url = "/user_profile"
