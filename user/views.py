@@ -65,6 +65,10 @@ class PasswordResetView2(PasswordResetView):
 class UserProfileModel(UpdateView):
     model = UserProfile
     form_class = UserProfileForm
-    success_url = "/user_profile"
+    success_url = "/"
     template_name = "user_profile.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(user=self.request.user)
     # add permission for users, so everyone can not change others profile

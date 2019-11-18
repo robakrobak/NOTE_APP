@@ -41,7 +41,7 @@ urlpatterns = [
         name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
-    path('user_profile/<int:pk>/', UserProfile.as_view(), name='user_profile'),
+    path('user_profile/<int:pk>/', UserProfileModel.as_view(), name='user_profile'),
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
 ]
 
