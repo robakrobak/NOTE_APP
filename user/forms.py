@@ -1,7 +1,7 @@
 from django import forms
-from django.db import models
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from bootstrap_datepicker_plus import DatePickerInput
 from user.models import UserProfile
 
 
@@ -20,8 +20,15 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2',)
 
-        
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('awatar', 'about_me', 'location', 'birth_date')
+        labels = {'awatar': 'Avatar'}
+
+        widgets = {
+            'about_me': forms.Textarea(),
+
+            'birth_date': DatePickerInput()
+        }
