@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
-from user.views import signup, login_view, UserProfileModel, PasswordResetView2
+from user.views import signup, login_view, UserProfileModel, PasswordResetView2, change_password
 from django.urls import path
 from core.views import NotesListView, logout_view
 from note.views import NoteCreateView
@@ -43,6 +43,7 @@ urlpatterns = [
         name='password_reset_complete'),
     path('user_profile/<int:pk>/', UserProfileModel.as_view(), name='user_profile'),
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
+    url(r'^password/$', change_password, name='change_password'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
