@@ -22,11 +22,11 @@ from django.contrib.auth import views as auth_views
 from user.views import signup, login_view, UserProfileModel, PasswordResetView2, change_password
 from django.urls import path
 from core.views import NotesListView, logout_view
-from note.views import NoteCreateView, mark_as_done
+from note.views import NoteCreateView, NoteDetailView, mark_as_done
+
 
 
 urlpatterns = [
-    # url(r'^note/$', note, name='note'),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),
     url(r'^signup/$', signup, name='signup'),
@@ -43,6 +43,7 @@ urlpatterns = [
         name='password_reset_complete'),
     path('user_profile/<int:pk>/', UserProfileModel.as_view(), name='user_profile'),
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
+    path('note/<int:pk>/', NoteDetailView.as_view(), name='note_detail'),
     path('notes/<int:pk>/', mark_as_done, name='mark_as_done'),
     url(r'^password/$', change_password, name='change_password'),
 ]
