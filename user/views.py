@@ -1,10 +1,11 @@
 # django
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm, User
+from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, User, PasswordChangeForm
 from django.contrib.auth.views import PasswordResetView
 from django.shortcuts import redirect, render
 from user.models import UserProfile
+from django.contrib import messages
 # python
 from core.email_service import confirms_registration, password_reset_fail
 from user.forms import SignUpForm, UserProfileForm
@@ -72,3 +73,20 @@ class UserProfileModel(UpdateView):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
     # add permission for users, so everyone can not change others profile
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('/')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {'form': form})
+
+
