@@ -1,11 +1,11 @@
 # django
+from django.views.generic import DetailView
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
 from note.forms import NoteForm
-from django.shortcuts import redirect
-
+from django.db.models import Q
 # python
 from note.models import Note
 
@@ -23,10 +23,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
-
         variable = super().form_valid(form)
-        # import ipdb;
-        # ipdb.set_trace()
         if variable:
             send_mail(
                 subject="You have been assigned(...)",
@@ -34,7 +31,6 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
                 from_email="noteapp12345@gmail.com",
                 recipient_list=[user.email for user in form.cleaned_data.get('id_users')])
         return variable
-
 
 
 def mark_as_done(request, pk):
@@ -45,3 +41,14 @@ def mark_as_done(request, pk):
     else:
         return redirect('note/add/')
 
+ 
+class NoteDetailView(DetailView):
+    model = Note
+    template_name = "note_detail.html"
+    context_object_name = "note"
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Note.objects.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user))
+        else:
+            return Note.objects.none()
