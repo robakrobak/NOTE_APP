@@ -14,3 +14,5 @@ class NoteForm(forms.ModelForm):
             'deadline': DateTimePickerInput(),  # default date-format %m/%d/%Y will be used
             'note': forms.Textarea(),
         }
+
+
