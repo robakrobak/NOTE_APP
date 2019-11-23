@@ -11,6 +11,7 @@ Hi {{ user.username }}!<br>
     <h2>
     <a href="{% url 'note_detail' pk=note.id %}">{{note.title}}</a>
     </h2>
+    
     <li>Created by: {{note.created_by}}</li>
     <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
         {% if note.created_by == user %}
