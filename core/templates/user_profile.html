@@ -11,7 +11,9 @@
 <h2>User Profile:</h2>
 <div class="col-6">
 <form action="" enctype="multipart/form-data"  method="post">
-    <img src="{{ user.profile.awatar.url }}" height="100" id="awatar">
+    {% if user.profile.awatar %}
+        <img src="{{ user.profile.awatar.url }}" height="40" id="awatar">
+    {% endif %}
     {% csrf_token %}
     {{ form|crispy }}
 
