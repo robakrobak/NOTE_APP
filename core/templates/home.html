@@ -5,17 +5,18 @@
 {% block content %}
 {% if user.is_authenticated %}
 Hi {{ user.username }}!<br>
-<h1>Your notes</h1>
-<h2>Number of notes: {{notes|length}} </h2>
+<h5>You have {{notes|length}} note</h5>
 <ul>
     {% for note in notes %}
-    <li>Note title: {{note.title|upper}}</li>
-    <li>Created on: {{note.add_date|date:'Y-m-d' }}</li>
+    <h2>
+    <a href="{% url 'note_detail' pk=note.id %}">{{note.title}}</a>
+    </h2>
     <li>Created by: {{note.created_by}}</li>
     <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
-        <a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-primary">Done</a>
-    <li>Note status: {{ note.is_done|yesno:"Is done, Is open" }}</li>
-    <h6></h6>
+        {% if note.created_by == user.username %}
+            <a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-primary">Done</a>
+
+        {% endif %}
     {% endfor %}
 </ul>
 {% else %}
