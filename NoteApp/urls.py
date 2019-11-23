@@ -24,8 +24,6 @@ from django.urls import path
 from core.views import NotesListView, logout_view
 from note.views import NoteCreateView, NoteDetailView, mark_as_done
 
-
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login_view, name='login'),

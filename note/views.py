@@ -39,9 +39,9 @@ def mark_as_done(request, pk):
         note.mark_as_done()
         return redirect('/')
     else:
-        return redirect('note/add/')
+        return redirect('notes/add/')
 
- 
+
 class NoteDetailView(DetailView):
     model = Note
     template_name = "note_detail.html"
