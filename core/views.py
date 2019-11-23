@@ -17,7 +17,7 @@ class NotesListView(ListView):
         try:
             context = super().get_context_data(**kwargs)
             context['notes'] = Note.objects.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user),
-                                                   is_done=False, ).distinct
+                                                   is_done=False, ).order_by("deadline").distinct
         except:
             context = super().get_context_data(**kwargs)
             context['notes'] = None

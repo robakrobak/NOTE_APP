@@ -30,6 +30,9 @@
             padding: 0;
             margin: 0;
         }
+        #awatar{
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -55,9 +58,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ user.username }}
+                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Change password</a>
+                            <a class="dropdown-item" href="{% url 'change_password' %}">Change password</a>
                             {% if user.pk %}
                             <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">User profile</a>
                             {% endif %}
