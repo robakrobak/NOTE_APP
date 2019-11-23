@@ -13,11 +13,11 @@ Hi {{ user.username }}!<br>
     </h2>
     <li>Created by: {{note.created_by}}</li>
     <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
-        {% if note.created_by == user.username %}
+        {% if note.created_by == user %}
             <a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-primary">Done</a>
 
         {% endif %}
-    {% endfor %}
+        {% endfor %}
 </ul>
 {% else %}
 <p>The home container when not logged in</p>
