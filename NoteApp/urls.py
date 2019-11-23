@@ -44,7 +44,7 @@ urlpatterns = [
     path('user_profile/<int:pk>/', UserProfileModel.as_view(), name='user_profile'),
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
     path('note/<int:pk>/', NoteDetailView.as_view(), name='note_detail'),
-    path('notes/<int:pk>/', mark_as_done, name='mark_as_done')
+    path('notes/<int:pk>/', mark_as_done, name='mark_as_done'),
     url(r'^password/$', change_password, name='change_password'),
 ]
 
