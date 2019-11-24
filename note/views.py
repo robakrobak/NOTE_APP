@@ -47,9 +47,7 @@ class NoteDetailView(DetailView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            if Note.objects.filter(created_by=self.request.user):
-                return Note.objects.filter(created_by=self.request.user)
-            else:
-                return Note.objects.filter(id_users=self.request.user)
+            return Note.objects.all()
         else:
             return Note.objects.none()
+
