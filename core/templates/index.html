@@ -58,20 +58,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-secondary" href="{% url 'home' %} ">in progress</a>
-                </li>&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-secondary" href="{% url 'archive.html' %} ">archive</a>
-                </li>&nbsp;
-                <li class="nav-item">
-                    <a class="nav-link btn btn-outline-secondary" href="{% url 'add_note' %} ">add note</a>
-                </li>
+
 
 
                 <form class="form-inline my-2 my-lg-0 mr-0">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success mr-2" type="submit">Search</button>
                     <li class="nav-item my-2 my-lg-0 mr-2">
                     <a class="btn btn-outline-secondary" href="{% url 'add_note' %} ">add note</a>
                     </li>
@@ -88,19 +78,21 @@
                             {% endif %}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'change_password' %}">Change password</a>
+                            <a class="dropdown-item" href="{% url 'archive.html' %} ">archive</a>
+
+                            <a class="dropdown-item" href="{% url 'change_password' %}">change password</a>
                             {% if user.pk %}
-                            <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">User profile</a>
+                            <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">user profile</a>
                             {% endif %}
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">log out</a>
                         </div>
                     </li>
                 </ul>
             {% else %}
             <form class="form-inline my-2 my-lg-0">
-                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
-                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">sign up</a>
             </form>
             {% endif %}
 
