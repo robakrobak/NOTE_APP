@@ -1,8 +1,9 @@
+<!doctype html>
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
 {{ form.media }}
-<!doctype html>
+
 <html lang="en">
 
 <head>
@@ -34,12 +35,15 @@
             border-radius: 8px;
         }
     </style>
+
 </head>
 <body>
-
+<font face='tahoma'>
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">note_app</a>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="media/awatar/DINGDONG.png" height="32">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -84,10 +88,11 @@
 
 <div class="container">
     {% if user.is_authenticated %}
-    <strong>You are logged in as {{ user.username }}</strong>
+    <h6></h6>
 
     {% else %}
-    <strong>You are not logged in</strong>
+    <h5>Improve your work experience with Ding<font color="green">D</font>ong.</h5>
+    <h6>You are not logged in</h6>
     {% endif %}
     <hr>
 
@@ -96,7 +101,7 @@
 
     {% endblock %}
 </div>
-
+</font>
 </body>
 </html>
 

@@ -36,6 +36,12 @@ Hi {{ user.username }}!<br>
     </ul>
 
 {% else %}
-<p>The home container when not logged in</p>
+<p>Do you want to improve your <font color="green">work experience</font>? <br>
+    Do you want to take it to <font color="green">the next level</font>? <br>
+    Do you want your company to <font color="green">grow and prosper</font>? <br>
+    <a href="{% url 'signup' %}"><font color="green">Join us!</font></a>
+
+
+</p>
 {% endif %}
 {% endblock %}
