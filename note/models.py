@@ -5,7 +5,7 @@ from user.models import User
 
 
 class Note(models.Model):
-    title = models.CharField(max_length=32, null=False)
+    title = models.CharField(max_length=128, null=False)
     note = models.CharField(max_length=4096)
     add_date = models.DateTimeField(auto_now_add=True, null=False)
     created_by = models.ForeignKey(User, default=None, blank=False, on_delete=models.CASCADE, null=True,

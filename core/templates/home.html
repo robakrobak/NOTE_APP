@@ -3,23 +3,38 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<head>
+    <style>
+        ul#note-list li {
+            display: inline;
+            list-style-type: circle;
+        }
+
+        .note-detail-link {
+            color: #5c8266;
+        }
+        .note-detail-link:hover {
+            text-decoration: none;
+            color: #5c8266;
+    </style>
+</head>
 {% if user.is_authenticated %}
 Hi {{ user.username }}!<br>
 <h5>You have {{notes|length}} note</h5>
-<ul>
-    {% for note in notes %}
-    <h2>
-    <a href="{% url 'note_detail' pk=note.id %}">{{note.title}}</a>
-    </h2>
-    
-    <li>Created by: {{note.created_by}}</li>
-    <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
-        {% if note.created_by == user %}
-            <a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-primary">Done</a>
-
+    <ul id="note-list">
+        {% for note in notes %}
+       <hr>
+            <h5><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></h5>
+                <li>Created by: {{note.created_by}} | </li>
+                <li>  Deadline: {{note.deadline|date:'Y-m-d' }}</li>
+                    {% if note.created_by == user %}
+                <br>You are author, is the note <a href="{% url 'mark_as_done' pk=note.id %}"
+                                                   class="btn btn-outline-secondary btn-sm">done</a> ?
         {% endif %}
+
         {% endfor %}
-</ul>
+    </ul>
+
 {% else %}
 <p>The home container when not logged in</p>
 {% endif %}
