@@ -1,12 +1,12 @@
 # python
-from note.models import Note
-from note.filters import NoteFilter
-# django
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth import logout
-from django.views.generic import ListView
 from django.db.models import Q
+# django
+from django.shortcuts import redirect
+from django.views.generic import ListView
+
+from note.filters import NoteFilter
+from note.models import Note
 
 
 class NotesListView(ListView):
@@ -17,7 +17,8 @@ class NotesListView(ListView):
     def get_queryset(self):
         if self.request.user.is_authenticated:
             queryset = super().get_queryset()
-            return queryset.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user), is_done=False).distinct()
+            return queryset.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user),
+                                   is_done=False).distinct()
         else:
             return Note.objects.none()
 
@@ -31,7 +32,7 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-  
+
 class NotesListArchiveView(ListView):
     model = Note
     template_name = "archive.html"
@@ -46,5 +47,3 @@ class NotesListArchiveView(ListView):
             context = super().get_context_data(**kwargs)
             context['notes'] = None
         return context
-
-

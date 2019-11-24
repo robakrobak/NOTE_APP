@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# from django.dispatch import receiver
-# from django.db import models
-# from django.db.models.signals import post_save
 
 User._meta.get_field('email')._unique = True
 
@@ -17,4 +14,3 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-

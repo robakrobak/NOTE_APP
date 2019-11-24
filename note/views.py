@@ -1,12 +1,10 @@
-# django
-from django.views.generic import DetailView
-from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
-from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+from django.views.generic import DetailView
+from django.views.generic.edit import CreateView
+
 from note.forms import NoteForm
-from django.db.models import Q
-# python
 from note.models import Note
 
 
