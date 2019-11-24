@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<head>
+    <style>
+        ul#note-list li {
+            display: inline;
+            list-style-type: circle;
+        }
+
+        .note-detail-link {
+            color: #5c8266;
+        }
+        .note-detail-link:hover {
+            text-decoration: none;
+            color: #5c8266;
+    </style>
+</head>
+{% if user.is_authenticated %}
+Hi {{ user.username }}!<br>
+<h6>You have {{notes|length}} archived notes</h6>
+    <ul id="note-list">
+        {% for note in notes %}
+       <hr>
+            <h5><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></h5>
+                <li>Created by: <font color="green">{{note.created_by}}</font> | </li>
+                <li>  Archived </li>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+{% endblock %}
