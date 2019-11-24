@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h1>{{note.title}}</h1>
+<h5><font color="green">{{note.title}}</font></h5><br>
 <p>Created on: {{note.add_date|date:'Y-m-d' }}</p>
 <p>Created by: {{note.created_by}}</p>
 <p>Deadline: {{note.deadline|date:'Y-m-d' }}</p>
