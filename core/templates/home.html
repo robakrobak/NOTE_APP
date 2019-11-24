@@ -20,7 +20,7 @@
 </head>
 {% if user.is_authenticated %}
 Hi {{ user.username }}!<br>
-<h5>You have {{notes|length}} note</h5>
+<h6>You have {{notes|length}} note</h6>
     <ul id="note-list">
         {% for note in notes %}
        <hr>
@@ -28,8 +28,8 @@ Hi {{ user.username }}!<br>
                 <li>Created by: {{note.created_by}} | </li>
                 <li>  Deadline: {{note.deadline|date:'Y-m-d' }}</li>
                     {% if note.created_by == user %}
-                <br>You are author, is the note <a href="{% url 'mark_as_done' pk=note.id %}"
-                                                   class="btn btn-outline-secondary btn-sm">done</a> ?
+                        <p align="right"><a href="{% url 'mark_as_done' pk=note.id %}"
+                                             class="btn btn-outline-secondary btn-sm">archive</a></p>
         {% endif %}
 
         {% endfor %}
