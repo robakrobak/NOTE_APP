@@ -29,6 +29,7 @@ def logout_view(request):
     return redirect('/')
 
 
+
 class NotesListArchiveView(ListView):
     model = Note
     template_name = "archive.html"
@@ -43,3 +44,4 @@ class NotesListArchiveView(ListView):
             context = super().get_context_data(**kwargs)
             context['notes'] = None
         return context
+
