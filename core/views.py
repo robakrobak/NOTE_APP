@@ -29,4 +29,17 @@ def logout_view(request):
     return redirect('/')
 
 
+class NotesListArchiveView(ListView):
+    model = Note
+    template_name = "archive.html"
+    context_object_name = "notes"
 
+    def get_context_data(self, **kwargs):
+        try:
+            context = super().get_context_data(**kwargs)
+            context['notes'] = Note.objects.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user),
+                                                   is_done=True, ).order_by("deadline").distinct
+        except:
+            context = super().get_context_data(**kwargs)
+            context['notes'] = None
+        return context
