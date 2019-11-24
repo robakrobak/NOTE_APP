@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 
 from user.views import signup, login_view, UserProfileModel, PasswordResetView2, change_password
 from django.urls import path
-from core.views import NotesListView, logout_view
+from core.views import NotesListView, logout_view, NotesListArchiveView
 from note.views import NoteCreateView, NoteDetailView, mark_as_done
 
 urlpatterns = [
@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^signup/$', signup, name='signup'),
     url(r'^logout/$', logout_view, name='logout'),
     url(r'^$', NotesListView.as_view(), name='home'),
+    url(r'^archive/$', NotesListArchiveView.as_view(), name='archive.html'),
     url(r'^password_reset/$', PasswordResetView2.as_view(template_name='password_reset_form.html'),
         name='password_reset'),
     url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
