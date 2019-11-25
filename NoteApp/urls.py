@@ -21,8 +21,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from core.views import NotesListView, logout_view, NotesListArchiveView
-from note.views import NoteCreateView, NoteDetailView, mark_as_done
-from user.views import signup, login_view, UserProfileModel, PasswordResetView2, change_password
+from note.views import NoteCreateView, NoteDetailView, change_status
+from user.views import signup, login_view, UserProfileView, PasswordResetViewWithAlternativeMail, change_password
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^logout/$', logout_view, name='logout'),
     url(r'^$', NotesListView.as_view(), name='home'),
     url(r'^archive/$', NotesListArchiveView.as_view(), name='archive.html'),
-    url(r'^password_reset/$', PasswordResetView2.as_view(template_name='password_reset_form.html'),
+    url(r'^password_reset/$', PasswordResetViewWithAlternativeMail.as_view(template_name='password_reset_form.html'),
         name='password_reset'),
     url(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
         name='password_reset_done'),
@@ -40,10 +40,10 @@ urlpatterns = [
         name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
         name='password_reset_complete'),
-    path('user_profile/<int:pk>/', UserProfileModel.as_view(), name='user_profile'),
+    path('user_profile/<int:pk>/', UserProfileView.as_view(), name='user_profile'),
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
     path('note/<int:pk>/', NoteDetailView.as_view(), name='note_detail'),
-    path('notes/<int:pk>/', mark_as_done, name='mark_as_done'),
+    path('notes/<int:pk>/<int:done>', change_status, name='mark_as'),
     url(r'^password/$', change_password, name='change_password'),
 ]
 

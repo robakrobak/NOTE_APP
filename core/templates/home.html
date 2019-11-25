@@ -29,7 +29,7 @@ Hi {{ user.username }}!
                 <li>Created by: {{note.created_by}} | </li>
                 <li>  Deadline: {{note.deadline|date:'Y-m-d' }}</li>
                     {% if note.created_by == user %}
-        <li><a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+        <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
             archive</a></li>
         {% endif %}
 

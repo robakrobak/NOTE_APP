@@ -1,5 +1,5 @@
 {% extends 'index.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 <head>
     <style>
@@ -17,14 +17,19 @@
     </style>
 </head>
 {% if user.is_authenticated %}
-Hi {{ user.username }}!<br>
-<h6>You have {{notes|length}} archived notes</h6>
+Hi {{ user.username }}!
+<form style="float: right"><font size=2>
+    {{filter.form}}
+    </font>
+</form>
     <ul id="note-list">
-        {% for note in notes %}
+        {% for note in filter.qs %}
        <hr>
             <h5><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></h5>
                 <li>Created by: <font color="green">{{note.created_by}}</font> | </li>
                 <li>  Archived </li>
+                <li><a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            unarchive</a></li>
         {% endfor %}
     </ul>
 
