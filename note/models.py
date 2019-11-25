@@ -17,6 +17,6 @@ class Note(models.Model):
     def __str__(self):
         return self.title
 
-    def mark_as_done(self):
-        self.is_done = True
+    def change_status(self, done):
+        self.is_done = done
         self.save()

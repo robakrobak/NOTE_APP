@@ -3,6 +3,7 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
+from django.db.models import Q
 
 from note.forms import NoteForm
 from note.models import Note
@@ -31,11 +32,14 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         return variable
 
 
-def mark_as_done(request, pk):
+def change_status(request, pk, done):
     note = Note.objects.get(pk=pk)
     if note.created_by == request.user:
-        note.mark_as_done()
-        return redirect('/')
+        note.change_status(bool(done))
+        if done == 0:
+            return redirect('/archive')
+        else:
+            return redirect('/')
     else:
         return redirect('notes/add/')
 
@@ -47,7 +51,8 @@ class NoteDetailView(DetailView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Note.objects.all()
+            queryset = super().get_queryset()
+            return queryset.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user),
+                                   pk=self.kwargs['pk']).distinct()
         else:
             return Note.objects.none()
-

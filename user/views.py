@@ -42,7 +42,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-class PasswordResetView2(PasswordResetView):
+class PasswordResetViewWithAlternativeMail(PasswordResetView):
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         user = User.objects.filter(email=email).exists()
@@ -63,7 +63,7 @@ class PasswordResetView2(PasswordResetView):
         return super().form_valid(form)
 
 
-class UserProfileModel(UpdateView):
+class UserProfileView(UpdateView):
     model = UserProfile
     form_class = UserProfileForm
     success_url = "/"
