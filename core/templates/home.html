@@ -31,6 +31,8 @@ Hi {{ user.username }}!
                     {% if note.created_by == user %}
         <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
             archive</a></li>
+        <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            edit</a></li>
         {% endif %}
 
         {% endfor %}
