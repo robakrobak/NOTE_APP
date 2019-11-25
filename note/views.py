@@ -1,12 +1,13 @@
 # django
 from django.views.generic import DetailView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.edit import CreateView
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin
-from note.forms import NoteForm
+from note.forms import NoteForm, CommentForm
 from django.db.models import Q
 # python
+from datetime import datetime
 from note.models import Note
 
 
@@ -46,9 +47,47 @@ class NoteDetailView(DetailView):
     model = Note
     template_name = "note_detail.html"
     context_object_name = "note"
+    form_class = CommentForm
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            return Note.objects.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user))
+            if Note.objects.filter(created_by=self.request.user):
+                return Note.objects.filter(created_by=self.request.user)
+            else:
+                return Note.objects.filter(id_users=self.request.user)
         else:
             return Note.objects.none()
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(NoteDetailView, self).get_context_data(**kwargs)
+    #     context['form'] = CommentForm(initial={
+    #         'note': self.object, 'author': self.request.user
+    #     })
+    #     return context
+    #
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #
+    #     if form.is_valid():
+    #         return self.form_valid(form)
+    #     else:
+    #         return self.form_invalid(form)
+    #
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super(NoteDetailView, self).form_valid(form)
+
+
+def add_comment_to_note(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.note = note
+            comment.save()
+            return redirect('/')
+    else:
+        form = CommentForm()
+    return render(request, 'note_detail.html', {'form': form})
