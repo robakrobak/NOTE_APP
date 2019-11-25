@@ -1,26 +1,48 @@
 {% extends 'index.html' %}
-
-{% block title %}Home{% endblock %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-{% if user.is_authenticated %}
-Hi {{ user.username }}!<br>
-<h5>You have {{notes|length}} note</h5>
-<ul>
-    {% for note in notes %}
-    <h2>
-    <a href="{% url 'note_detail' pk=note.id %}">{{note.title}}</a>
-    </h2>
-    
-    <li>Created by: {{note.created_by}}</li>
-    <li>Deadline: {{note.deadline|date:'Y-m-d' }}</li>
-        {% if note.created_by == user %}
-            <a href="{% url 'mark_as_done' pk=note.id %}" class="btn btn-primary">Done</a>
+<head>
+    <style>
+        ul#note-list li {
+            display: inline;
+        }
 
+        .note-detail-link {
+            color: #5c8266;
+        }
+        .note-detail-link:hover {
+            text-decoration: none;
+            color: #5c8266;
+            }
+    </style>
+</head>
+{% if user.is_authenticated %}
+Hi {{ user.username }}!
+<form style="float: right"><font size=2>
+    {{filter.form}}
+    </font>
+</form>
+    <ul id="note-list">
+        {% for note in filter.qs %}
+       <hr>
+        <font size=4><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></font><br>
+                <li>Created by: {{note.created_by}} | </li>
+                <li>  Deadline: {{note.deadline|date:'Y-m-d' }}</li>
+                    {% if note.created_by == user %}
+        <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            archive</a></li>
         {% endif %}
+
         {% endfor %}
-</ul>
+    </ul>
+
 {% else %}
-<p>The home container when not logged in</p>
+<p>Do you want to improve your <font color="green">work experience</font>? <br>
+    Do you want to take it to <font color="green">the next level</font>? <br>
+    Do you want your company to <font color="green">grow and prosper</font>? <br>
+    <a href="{% url 'signup' %}"><font color="green">Join us!</font></a>
+
+
+</p>
 {% endif %}
 {% endblock %}

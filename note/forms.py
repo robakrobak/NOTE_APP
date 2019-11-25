@@ -5,7 +5,6 @@ from note.models import Note, Comment
 
 
 class NoteForm(forms.ModelForm):
-
     class Meta:
         model = Note
         fields = ['title', 'note', 'deadline', 'id_users']
@@ -16,9 +15,10 @@ class NoteForm(forms.ModelForm):
             'note': forms.Textarea(),
         }
 
-
+        
 class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
         fields = ['author', 'text']
+
