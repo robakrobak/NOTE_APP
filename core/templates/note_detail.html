@@ -3,16 +3,17 @@
 {% block content %}
 {% if user.is_authenticated %}
 <h5><font color="green">{{note.title}}</font></h5><br>
+<p>Priority: {{note.priority|}}</p>
 <p>Created on: {{note.add_date|date:'Y-m-d' }}</p>
 <p>Created by: {{note.created_by}}</p>
 <p>Deadline: {{note.deadline|date:'Y-m-d' }}</p>
-<p>Note: {{note.note}}</p>
 <p>Note status: {{ note.is_done|yesno:"Is done, Is open" }}</p>
 <p>Users added to note:
       <td>{% for user_id in note.id_users.all %}
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
           {% endfor %}</td>
 </p>
+<p>Note: {{note.note}}</p>
 {% else %}
 <p>The home container when not logged in</p>
 {% endif %}
