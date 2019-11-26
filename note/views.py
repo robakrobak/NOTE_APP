@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, FormMixin
+from django.views.generic.edit import CreateView, UpdateView, FormMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 # python
@@ -27,10 +27,27 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         if variable:
             send_mail(
                 subject="You have been assigned(...)",
-                message="You have beed assigned to note. Check your current status at NOTE_APP application",
+                message=f"You have been assigned to note '{form.cleaned_data.get('title')}'."
+                        f"Check your current status at NOTE_APP application",
                 from_email="noteapp12345@gmail.com",
                 recipient_list=[user.email for user in form.cleaned_data.get('id_users')])
         return variable
+
+
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = '/'
+    redirect_field_name = 'home'
+    model = Note
+    form_class = NoteForm
+    success_url = "/"
+    template_name = "edit_note.html"
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            queryset = super().get_queryset()
+            return queryset.filter(created_by=self.request.user, pk=self.kwargs['pk'])
+        else:
+            return Note.objects.none()
 
 
 def change_status(request, pk, done):
