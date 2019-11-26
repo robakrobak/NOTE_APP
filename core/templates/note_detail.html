@@ -3,32 +3,46 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h1>{{note.title}}</h1>
-<p>Created on: {{note.add_date|date:'Y-m-d' }}</p>
-<p>Created by: {{note.created_by}}</p>
-<p>Deadline: {{note.deadline|date:'Y-m-d' }}</p>
-<p>Note: {{note.note}}</p>
-<p>Note status: {{ note.is_done|yesno:"Is done, Is open" }}</p>
-<p>Users added to note:
+<h4>{{note.title}}</h4>
+Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
+    | Deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> Note status: {{ note.is_done|yesno:"Is done, Is open" }}
+    {% if note.id_users.all %}
+     | Users added to note:
       <td>{% for user_id in note.id_users.all %}
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
           {% endfor %}</td>
-</p>
-    {% for comment in note.comments.all %}
+    {% endif %}
 <br>
-        <div class="comment">
-            <div class="date">{{ comment.created_date }}</div>
-            <strong>{{ comment.author }}</strong>
-            <p>{{ comment.text|linebreaks }}</p>
+<br>
+
+
+<div class="row justify-content-left">
+    <div class="col-7">
+        <div class="card">
+            <div class="card-body">
+            Note: <br><h5>{{note.note}}</h5>
+            </div>
         </div>
+    </div>
+</div>
+<br>
+    {% for comment in note.comments.all %}
+
+  <div class="row justify-content-left">
+            <div class="comment">
+                <div class="date">{{ comment.created_date }}</div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p><hr>
+            </div>
+  </div>
     {% empty %}
-        <p>No comments here yet.</p>
+        <br><p>No comments here yet.</p>
     {% endfor %}
-<h1>New comment</h1>
-    <form method="POST" class="post-form">
+<p>New comment</p>
+    <form method="POST" class="post-form" style="width:400px">
         {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="save btn btn-default">Send</button>
+        {{ form|crispy }}
+        <button type="submit" class="save btn btn-primary btn-sm">Send</button>
     </form>
 {% else %}
 <p>The home container when not logged in</p>

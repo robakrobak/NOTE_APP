@@ -25,7 +25,8 @@ Hi {{ user.username }}!
     <ul id="note-list">
         {% for note in filter.qs %}
        <hr>
-            <h5><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></h5>
+            <font size="4"><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a>
+            <br></font>
                 <li>Created by: <font color="green">{{note.created_by}}</font> | </li>
                 <li>  Archived </li>
                 <li><a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">

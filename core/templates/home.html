@@ -27,12 +27,13 @@ Hi {{ user.username }}!
        <hr>
         <font size=4><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></font><br>
                 <li>Created by: {{note.created_by}} | </li>
-                <li>  Deadline: {{note.deadline|date:'Y-m-d' }}</li>
+                <li>  Deadline: {{note.deadline|date:'Y-m-d H:i' }}</li>
                     {% if note.created_by == user %}
-        <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
-            archive</a></li>
-        <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm" style="float: right">
-            edit</a></li>
+        <div style="float: right">
+        <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm">
+            archive</a></li>&nbsp;
+        <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm">
+            edit</a></li></div>
         {% endif %}
 
         {% endfor %}
