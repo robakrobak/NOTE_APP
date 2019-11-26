@@ -21,8 +21,9 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from core.views import NotesListView, logout_view, NotesListArchiveView
-from note.views import NoteCreateView, NoteDetailView, change_status, NoteUpdateView
+from note.views import NoteCreateView, NoteDetailView, change_status, NoteUpdateView, add_comment_to_note
 from user.views import signup, login_view, UserProfileView, PasswordResetViewWithAlternativeMail, change_password
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -46,6 +47,7 @@ urlpatterns = [
     path('note/<int:pk>/edit', NoteUpdateView.as_view(), name='note_edit'),
     path('notes/<int:pk>/<int:done>', change_status, name='mark_as'),
     url(r'^password/$', change_password, name='change_password'),
+    path('note/<slug:pk>/', add_comment_to_note, name='add_comment_to_note'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

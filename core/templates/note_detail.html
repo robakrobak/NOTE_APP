@@ -1,4 +1,5 @@
 {% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -13,6 +14,25 @@
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
           {% endfor %}</td>
 </p>
+
+    {% for comment in note.comments.all %}
+        <div class="comment">
+            <div class="date">{{ comment.created_date }}</div>
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
+        </div>
+    {% empty %}
+        <p>No comments here yet.</p>
+    {% endfor %}
+<h1>New comment</h1>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form }}
+
+        <button type="submit" class="save btn btn-default">Send</button>
+        <a class="btn btn-default" href="{% url 'add_comment_to_note' pk=post.pk %}">Add comment</a>
+    </form>
+
 {% else %}
 <p>The home container when not logged in</p>
 {% endif %}
