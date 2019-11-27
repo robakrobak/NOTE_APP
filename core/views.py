@@ -13,6 +13,7 @@ class NotesListView(ListView):
     model = Note
     template_name = "home.html"
     done = False
+    ordering = 'deadline'
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -37,3 +38,4 @@ class NotesListArchiveView(NotesListView):
     model = Note
     template_name = "archive.html"
     done = True
+    ordering = '-deadline'

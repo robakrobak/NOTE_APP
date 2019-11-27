@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 # python
 from note.forms import NoteForm, CommentForm
 from note.models import Note
+from core.email_service import note_assign_mail
 
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
@@ -25,12 +26,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         variable = super().form_valid(form)
         if variable:
-            send_mail(
-                subject="You have been assigned(...)",
-                message=f"You have been assigned to note '{form.cleaned_data.get('title')}'."
-                        f"Check your current status at NOTE_APP application",
-                from_email="noteapp12345@gmail.com",
-                recipient_list=[user.email for user in form.cleaned_data.get('id_users')])
+            note_assign_mail(form.cleaned_data.get('id_users'), form.cleaned_data.get('title'))
         return variable
 
 
@@ -41,6 +37,9 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     form_class = NoteForm
     success_url = "/"
     template_name = "edit_note.html"
+    mail_list = []
+    for user in self.object.id_users.all():
+        mail_list.append(user)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -48,6 +47,15 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
             return queryset.filter(created_by=self.request.user, pk=self.kwargs['pk'])
         else:
             return Note.objects.none()
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        variable = super().form_valid(form)
+        if variable:
+            for user in self.object.id_users.all():
+                if user not in self.mail_list:
+                    note_assign_mail([user], form.cleaned_data.get('title'))
+        return variable
 
 
 def change_status(request, pk, done):
