@@ -37,9 +37,10 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
     form_class = NoteForm
     success_url = "/"
     template_name = "edit_note.html"
-    mail_list = []
-    for user in self.object.id_users.all():
-        mail_list.append(user)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.mail_list = []
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
@@ -49,13 +50,15 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
             return Note.objects.none()
 
     def form_valid(self, form):
-        form.instance.created_by = self.request.user
+        for user in self.object.id_users.all():
+            self.mail_list.append(user)
         variable = super().form_valid(form)
         if variable:
-            for user in self.object.id_users.all():
+            for user in form.cleaned_data.get('id_users'):
                 if user not in self.mail_list:
                     note_assign_mail([user], form.cleaned_data.get('title'))
-        return variable
+            self.mail_list = []
+            return variable
 
 
 def change_status(request, pk, done):
@@ -86,7 +89,6 @@ class NoteDetailView(DetailView, FormMixin):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-
         if form.is_valid() and len(form.instance.text) > 0:
             return self.form_valid(form)
         else:
