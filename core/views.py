@@ -1,7 +1,5 @@
-# python
 from django.contrib.auth import logout
 from django.db.models import Q
-# django
 from django.shortcuts import redirect
 from django.views.generic import ListView
 
