@@ -1,9 +1,11 @@
+import datetime
+
 from django.db import models
+from django.utils import timezone
+from django.utils.timezone import utc
 
 from note.validators import deadline_validator
 from user.models import User
-
-from django.utils import timezone
 
 
 class Note(models.Model):
@@ -22,6 +24,12 @@ class Note(models.Model):
     def change_status(self, done):
         self.is_done = done
         self.save()
+
+    def get_time_diff(self):
+        if self.deadline:
+            now = datetime.datetime.utcnow().replace(tzinfo=utc)
+            timediff = self.deadline - now
+            return timediff.total_seconds() / 3600
 
 
 class Comment(models.Model):

@@ -24,18 +24,23 @@ Hi {{ user.username }}!
 </form>
     <ul id="note-list">
         {% for note in filter.qs %}
-       <hr>
+        <hr>
         <font size=4><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></font><br>
-                <li>Created by: {{note.created_by}} | </li>
+        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
+            {% if note.get_time_diff < 25 %}
+                <li>  <font color="#a80a02"><b>Deadline: {{note.deadline|date:'Y-m-d H:i' }}</b></font></li>
+            {% elif note.get_time_diff < 73 %}
+                <li>  <font color="f2a200">Deadline: {{note.deadline|date:'Y-m-d H:i' }}</font></li>
+            {% else %}
                 <li>  Deadline: {{note.deadline|date:'Y-m-d H:i' }}</li>
-                    {% if note.created_by == user %}
-        <div style="float: right">
-        <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm">
-            archive</a></li>&nbsp;
-        <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm">
-            edit</a></li></div>
+            {% endif %}
+        {% if note.created_by == user %}
+            <div style="float: right">
+            <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm">
+                archive</a></li>&nbsp;
+            <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm">
+                edit</a></li></div>
         {% endif %}
-
         {% endfor %}
     </ul>
 
@@ -43,9 +48,6 @@ Hi {{ user.username }}!
 <p>Do you want to improve your <font color="green">work experience</font>? <br>
     Do you want to take it to <font color="green">the next level</font>? <br>
     Do you want your company to <font color="green">grow and prosper</font>? <br>
-    <a href="{% url 'signup' %}"><font color="green">Join us!</font></a>
-
-
-</p>
+    <a href="{% url 'signup' %}"><font color="green">Join us!</font></a></p>
 {% endif %}
 {% endblock %}
