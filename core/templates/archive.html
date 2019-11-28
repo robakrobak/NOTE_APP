@@ -16,24 +16,25 @@
             color: #5c8266;
     </style>
 </head>
-{% if user.is_authenticated %}
-Hi {{ user.username }}!
-<h4>Archive</h4>
+Archive
 <form style="float: right"><font size=2>
     {{filter.form}}
     </font>
 </form>
     <ul id="note-list">
+
         {% for note in filter.qs %}
        <hr>
             <font size="4"><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a>
             <br></font>
                 <li>Created by: <font color="green">{{note.created_by}}</font> | </li>
                 <li>  Archived </li>
-                <li><a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+                 {% if note.created_by == user %}
+
+        <li><a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
             unarchive</a></li>
+                {% endif %}
         {% endfor %}
     </ul>
 
-{% endif %}
 {% endblock %}
