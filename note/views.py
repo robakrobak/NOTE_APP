@@ -58,7 +58,7 @@ class NoteUpdateView(LoginRequiredMixin, UpdateView):
                 if user not in self.mail_list:
                     note_assign_mail([user], form.cleaned_data.get('title'))
             self.mail_list = []
-            return variable
+            return redirect('note_detail', pk=self.kwargs['pk'])
 
 
 def change_status(request, pk, done):
@@ -111,6 +111,7 @@ class ImageCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         try:
             form.instance.note = Note.objects.get(pk=self.kwargs['pk'], created_by=self.request.user)
+            form.instance.created_by = self.request.user
             form.save()
         finally:
             return redirect('note_detail', pk=self.kwargs['pk'])
