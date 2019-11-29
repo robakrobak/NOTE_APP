@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<h4>{{note.title}}</h4>
+Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
+    | Deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> Note status: {{ note.is_done|yesno:"Is done, Is open" }}
+    {% if note.id_users.all %}
+     | Users added to note:
+      {% for user_id in note.id_users.all %}
+             {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
+
+          {% endfor %}
+
+    {% endif %}<br>
+{% if note.created_by == user %}
+
+        {% if note.is_done == False %}
+                <div style="float: left">
+                    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
+                        edit</a>
+                    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
+                        archive</a>&nbsp;
+                </div><br>
+        {% else %}
+            <div style="float: left">
+            <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            unarchive</a></div><br>
+        {% endif %}
+    {% endif %}
+<br>
+
+
+
+<div class="row justify-content-left">
+    <div class="col-7">
+        <div class="card">
+            <div class="card-body">
+            Note: <br><h5>{{note.note}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+
+    {% for comment in note.comments.all %}
+
+  <div class="row justify-content-left">
+            <div class="comment">
+                <div class="date">{{ comment.created_date }}</div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p><hr>
+            </div>
+  </div>
+    {% empty %}
+        <br><p>No comments here yet.</p>
+    {% endfor %}
+<p>New comment</p>
+    <form method="POST" class="post-form" style="width:400px">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="save btn btn-primary btn-sm">Send</button>
+    </form>
+{% else %}
+<p>The home container when not logged in</p>
+{% endif %}
+{% endblock %}
