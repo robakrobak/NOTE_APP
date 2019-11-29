@@ -34,7 +34,7 @@ Hi {{ user.username }}!
                 <div class="card">
 
                     {% if note.get_time_diff < 25 %}
-                    <div class="card-body" style="background-color: none">
+                    <div class="card-body">
                         <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
                         <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
                         <li>deadline:<font color="#9e2121"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
