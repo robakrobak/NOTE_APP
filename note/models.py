@@ -12,7 +12,7 @@ class Note(models.Model):
     LOW = 'low'
     MEDIUM = 'medium'
     HIGH = 'high'
-    NO_PRIORITY = ''
+    NO_PRIORITY = 'no priority'
     priority_choices = [
         (NO_PRIORITY, 'no priority'),
         (LOW, 'low'),
