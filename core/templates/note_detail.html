@@ -14,6 +14,19 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
           {% endfor %}
 
     {% endif %}<br>
+
+
+
+<div class="row justify-content-left">
+    <div class="col-7">
+        <div class="card">
+            <div class="card-body">
+            Note: <br><h5>{{note.note}}</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
 {% if note.created_by == user %}
         {% if note.is_done == False %}
                 <div style="float: left">
@@ -31,20 +44,26 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
         {% endif %}
     {% endif %}
 <br>
-
-
-
-<div class="row justify-content-left">
-    <div class="col-7">
-        <div class="card">
-            <div class="card-body">
-            Note: <br><h5>{{note.note}}</h5>
+  <div class="container">
+      <div class="card-group">
+          {% for image in note.images.all %}
+                  <div class="image">
+                      <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
+                      <p>{{ image.description }}</p><hr>
+                      {% if note.created_by == user %}
+                          {% if note.is_done == False %}
+                              <div style="float: left">
+                                  <a class="btn btn-outline-secondary">
+                                        delete</a>
+                              </div><br>
+                          {% endif %}
+                      {% endif %}
+                    </div>
+    {% empty %}
+    {% endfor %}
+  <br>
             </div>
-        </div>
-    </div>
-</div>
-<br>
-
+  </div>
 
 
 

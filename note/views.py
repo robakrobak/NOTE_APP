@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.views.generic import DetailView
-from django.views.generic.edit import CreateView, UpdateView, FormMixin
+from django.views.generic.edit import CreateView, UpdateView, FormMixin, DeleteView
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 # python
@@ -109,6 +109,15 @@ class ImageCreateView(LoginRequiredMixin, CreateView):
     template_name = "add_image.html"
 
     def form_valid(self, form):
-        form.instance.note = Note.objects.get(pk=self.kwargs['pk'])
-        form.save()
-        return redirect('note_detail', pk=self.kwargs['pk'])
+        try:
+            form.instance.note = Note.objects.get(pk=self.kwargs['pk'], created_by=self.request.user)
+            form.save()
+        finally:
+            return redirect('note_detail', pk=self.kwargs['pk'])
+
+#
+# def delete_image(request, id, pk):
+#     note = Note.objects.get(pk=pk, created_by=self.request.user)
+#     query = ImageToNote.objects.get(pk=id, note=note)
+#     query.delete()
+#     return HttpResponse("Deleted!")
