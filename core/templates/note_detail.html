@@ -3,7 +3,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<font color="Darkslategray"><span style="font-size: 1.1em"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{note.title}} </span></font><br><br>
+<font color="Darkslategray"><span style="font-size: 1.1em"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{note.title}} </span></font>
+<br><br>
 
 <div class="row justify-content-left">
     <div class="col-7">
@@ -15,80 +16,77 @@
     </div>
 </div>
 <br>
+<div class="row justify-content-left">
 
-<div class="card">
+    <div class="col-7">
+        <div class="card">
 
-                    {% if note.get_time_diff < 25 %}
-                    <div class="card-body" style="background-color: none">
-                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font></li>
-                        <li>deadline:<font color="#9e2121"> {{note.deadline|date:'Y-m-d H:i' }} </font></li>
-                        <li>
-                        {% if note.priority == 'high' %}
-                            priority:<font color="#9e2121"> {{note.priority}}</font>
-                        {% elif note.priority == 'medium'%}
-                            priority:<font color="#9e6a21"> {{note.priority}}</font>
-                        {% elif note.priority == 'low' %}
-                            priority:<font color="#9a9e21"> {{note.priority}}</font>
-                        {% else %}
-                            priority:<font color="#5f9e21"> {{note.priority}}</font>
-                        {% endif %}
-                        </li>
-                        <li>{% if note.id_users.all %}
-                             users added to note:<br>
-                            {% for user in note.id_users.all %}
-                            {{ user.username }}
-                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |
-                            {% endfor %}
-
-                            {% endif %}<br>
-
-                    </div>
-
-
-
-                    {% elif note.get_time_diff < 73 %}
-                    <div class="card-body" style="background-color: none">
-                        <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
-                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
-                        <li>deadline:<font color="#9e6a21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
-                        <li>
-                         {% if note.priority == 'high' %}
-                            priority:<font color="#9e2121"> {{note.priority}}</font>
-                         {% elif note.priority == 'medium'%}
-                            priority:<font color="#9e6a21"> {{note.priority}}</font>
-                         {% elif note.priority == 'low' %}
-                            priority:<font color="#9a9e21"> {{note.priority}}</font>
-                         {% else %}
-                            priority:<font color="#5f9e21"> {{note.priority}}</font>
-                         {% endif %}
-                        </li>
-                    </div>
-
+            {% if note.get_time_diff < 25 %}
+            <div class="card-body">
+                <li>created by:<font color="Darkslategray"> {{note.created_by}} </font></li>
+                <li>deadline:<font color="#9e2121"> {{note.deadline|date:'Y-m-d H:i' }} </font></li>
+                <li>
+                    {% if note.priority == 'high' %}
+                    priority:<font color="#9e2121"> {{note.priority}}</font>
+                    {% elif note.priority == 'medium'%}
+                    priority:<font color="#9e6a21"> {{note.priority}}</font>
+                    {% elif note.priority == 'low' %}
+                    priority:<font color="#9a9e21"> {{note.priority}}</font>
                     {% else %}
-                    <div class="card-body">
-                        <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
-                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
-                        <li>deadline:<font color="#5f9e21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
-                        <li>
-                         {% if note.priority == 'high' %}
-                            priority:<font color="#9e2121"> {{note.priority}}</font>
-                         {% elif note.priority == 'medium'%}
-                            priority:<font color="#9e6a21"> {{note.priority}}</font>
-                         {% elif note.priority == 'low' %}
-                            priority:<font color="#9a9e21"> {{note.priority}}</font>
-                         {% else %}
-                            priority:<font color="#5f9e21"> {{note.priority}}</font>
-                         {% endif %}
-                        </li>
-                    </div>
-
-
+                    priority:<font color="#5f9e21"> {{note.priority}}</font>
                     {% endif %}
+                </li>
+                <li>{% if note.id_users.all %}
+                    users added to note:<br>
+                    {% for user in note.id_users.all %}
+                    {{ user.username }}
+                    <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |
+                    {% endfor %}
+
+                    {% endif %}<br>
+
+            </div>
 
 
-                </div>
+            {% elif note.get_time_diff < 73 %}
+            <div class="card-body" style="background-color: none">
+                <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
+                <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                <li>deadline:<font color="#9e6a21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                <li>
+                    {% if note.priority == 'high' %}
+                    priority:<font color="#9e2121"> {{note.priority}}</font>
+                    {% elif note.priority == 'medium'%}
+                    priority:<font color="#9e6a21"> {{note.priority}}</font>
+                    {% elif note.priority == 'low' %}
+                    priority:<font color="#9a9e21"> {{note.priority}}</font>
+                    {% else %}
+                    priority:<font color="#5f9e21"> {{note.priority}}</font>
+                    {% endif %}
+                </li>
+            </div>
 
-
+            {% else %}
+            <div class="card-body">
+                <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
+                <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                <li>deadline:<font color="#5f9e21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                <li>
+                    {% if note.priority == 'high' %}
+                    priority:<font color="#9e2121"> {{note.priority}}</font>
+                    {% elif note.priority == 'medium'%}
+                    priority:<font color="#9e6a21"> {{note.priority}}</font>
+                    {% elif note.priority == 'low' %}
+                    priority:<font color="#9a9e21"> {{note.priority}}</font>
+                    {% else %}
+                    priority:<font color="#5f9e21"> {{note.priority}}</font>
+                    {% endif %}
+                </li>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 <br>
 
 {% if note.created_by == user %}
@@ -117,10 +115,10 @@
             <p>{{ image.description }}</p>
             <hr>
             {% if note.created_by == user %}
-                {% if note.is_done == False %}
-                    <a href="{% url 'image_delete' pk=note.id imgpk=image.pk %}" class="btn btn-outline-secondary">delete</a>&nbsp;
-                <br>
-                {% endif %}
+            {% if note.is_done == False %}
+            <a href="{% url 'image_delete' pk=note.id imgpk=image.pk %}" class="btn btn-outline-secondary">delete</a>&nbsp;
+            <br>
+            {% endif %}
             {% endif %}
         </div>
         {% empty %}
@@ -132,7 +130,7 @@
 
 {% for comment in note.comments.all %}
 
-<div class="row justify-content-left">
+<div class="row justify-content-left" style="margin-left: 30px">
     <div class="comment">
         <div class="date">{{ comment.created_date }}</div>
         <strong>{{ comment.author }}</strong>
