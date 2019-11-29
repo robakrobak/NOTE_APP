@@ -35,11 +35,9 @@
                         </li>
                         <li>{% if note.id_users.all %}
                              users added to note:<br>
-                            {% for user_id in note.id_users.all %}
-                            {{ user_id.username }}
-                            {% endfor %}
                             {% for user in note.id_users.all %}
-                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |<br>
+                            {{ user.username }}
+                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |
                             {% endfor %}
 
                             {% endif %}<br>
@@ -119,13 +117,10 @@
             <p>{{ image.description }}</p>
             <hr>
             {% if note.created_by == user %}
-            {% if note.is_done == False %}
-            <div style="float: left">
-                <a class="btn btn-outline-secondary">
-                    delete</a>
-            </div>
-            <br>
-            {% endif %}
+                {% if note.is_done == False %}
+                    <a href="{% url 'image_delete' pk=note.id imgpk=image.pk %}" class="btn btn-outline-secondary">delete</a>&nbsp;
+                <br>
+                {% endif %}
             {% endif %}
         </div>
         {% empty %}
