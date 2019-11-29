@@ -8,12 +8,29 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
     | Deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> Note status: {{ note.is_done|yesno:"Is done, Is open" }}
     {% if note.id_users.all %}
      | Users added to note:
-      <td>{% for user_id in note.id_users.all %}
+      {% for user_id in note.id_users.all %}
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
-          {% endfor %}</td>
+
+          {% endfor %}
+
+    {% endif %}<br>
+{% if note.created_by == user %}
+
+        {% if note.is_done == False %}
+                <div style="float: left">
+                    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
+                        edit</a>
+                    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
+                        archive</a>&nbsp;
+                </div><br>
+        {% else %}
+            <div style="float: left">
+            <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            unarchive</a></div><br>
+        {% endif %}
     {% endif %}
 <br>
-<br>
+
 
 
 <div class="row justify-content-left">
@@ -26,6 +43,10 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
     </div>
 </div>
 <br>
+
+
+
+
     {% for comment in note.comments.all %}
 
   <div class="row justify-content-left">

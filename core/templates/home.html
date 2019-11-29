@@ -8,11 +8,11 @@
         }
 
         .note-detail-link {
-            color: #5c8266;
+            color: #000000;
         }
         .note-detail-link:hover {
             text-decoration: none;
-            color: #5c8266;
+            color: #000000;
             }
     </style>
 </head>
@@ -22,25 +22,45 @@ Hi {{ user.username }}!
     {{filter.form}}
     </font>
 </form>
+
     <ul id="note-list">
+        <hr>
         {% for note in filter.qs %}
         <hr>
-        <font size=4><a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">{{note.title}}</a></font><br>
-        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
-            {% if note.get_time_diff < 25 %}
-                <li>  <font color="#a80a02"><b>Deadline: {{note.deadline|date:'Y-m-d H:i' }}</b></font></li>
-            {% elif note.get_time_diff < 73 %}
-                <li>  <font color="f2a200">Deadline: {{note.deadline|date:'Y-m-d H:i' }}</font></li>
-            {% else %}
-                <li>  Deadline: {{note.deadline|date:'Y-m-d H:i' }}</li>
-            {% endif %}
-        {% if note.created_by == user %}
-            <div style="float: right">
-            <li><a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary btn-sm">
-                archive</a></li>&nbsp;
-            <li><a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary btn-sm">
-                edit</a></li></div>
-        {% endif %}
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">
+                    <div class="card">
+
+                    {% if note.get_time_diff < 25 %}
+                        <div class="card-body" style="background-color: #ffe8e8">
+                                {{note.title}} <br>
+                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
+                        <li>  <font color="#a80a02"><b>Deadline: {{note.deadline|date:'Y-m-d H:i' }}</b></font></li>
+
+                        </div>
+
+                    {% elif note.get_time_diff < 73 %}
+                        <div class="card-body" style="background-color: #fffacf">
+                                {{note.title}} <br>
+                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
+                        <li>  <font color="f2a200">Deadline: {{note.deadline|date:'Y-m-d H:i' }}</font></li>
+                        </div>
+                    {% else %}
+                        <div class="card-body">
+                                {{note.title}} <br>
+                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
+                        <li>  Deadline: {{note.deadline|date:'Y-m-d H:i' }}</li>
+                        </div>
+
+
+                    {% endif %}
+
+
+                    </div>
+                </a>
+            </div>
+        </div>
         {% endfor %}
     </ul>
 
