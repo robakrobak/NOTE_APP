@@ -3,88 +3,157 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h4><font color="Darkslategray">| <b>{{note.title}}</b> |</font></h4>
-created by: <font color="Darkslategray"><b>{{note.created_by}}</b></font> | created on: {{note.add_date|date:'Y-m-d' }}
-    | deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> note status: {{ note.is_done|yesno:"Is done, Is open" }}
-{% if note.id_users.all %}
-     | users added to note:
-      {% for user_id in note.id_users.all %}
-             {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
-
-          {% endfor %}
-
-    {% endif %}<br>
-
-
+<font color="Darkslategray"><span style="font-size: 1.1em"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{note.title}} </span></font><br><br>
 
 <div class="row justify-content-left">
     <div class="col-7">
         <div class="card">
             <div class="card-body">
-            Note: <br><h5>{{note.note}}</h5>
+                Note: <h5>{{note.note}}</h5>
             </div>
         </div>
     </div>
 </div>
 <br>
-{% if note.created_by == user %}
-        {% if note.is_done == False %}
-                <div style="float: left">
-                    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
-                        edit</a>
-                    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">
-                        add image</a>
-                    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
-                        archive</a>&nbsp;
-                </div><br>
-        {% else %}
-            <div style="float: left">
-            <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
-            unarchive</a></div><br>
-        {% endif %}
-    {% endif %}
-<br>
-  <div class="container">
-      <div class="card-group">
-          {% for image in note.images.all %}
-                  <div class="image">
-                      <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
-                      <p>{{ image.description }}</p><hr>
-                      {% if note.created_by == user %}
-                          {% if note.is_done == False %}
-                              <div style="float: left">
-                                  <a class="btn btn-outline-secondary">
-                                        delete</a>
-                              </div><br>
-                          {% endif %}
-                      {% endif %}
+
+<div class="card">
+
+                    {% if note.get_time_diff < 25 %}
+                    <div class="card-body" style="background-color: none">
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font></li>
+                        <li>deadline:<font color="#9e2121"> {{note.deadline|date:'Y-m-d H:i' }} </font></li>
+                        <li>
+                        {% if note.priority == 'high' %}
+                            priority:<font color="#9e2121"> {{note.priority}}</font>
+                        {% elif note.priority == 'medium'%}
+                            priority:<font color="#9e6a21"> {{note.priority}}</font>
+                        {% elif note.priority == 'low' %}
+                            priority:<font color="#9a9e21"> {{note.priority}}</font>
+                        {% else %}
+                            priority:<font color="#5f9e21"> {{note.priority}}</font>
+                        {% endif %}
+                        </li>
+                        <li>{% if note.id_users.all %}
+                             users added to note:<br>
+                            {% for user_id in note.id_users.all %}
+                            {{ user_id.username }}
+                            {% endfor %}
+                            {% for user in note.id_users.all %}
+                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |<br>
+                            {% endfor %}
+
+                            {% endif %}<br>
+
                     </div>
-    {% empty %}
-    {% endfor %}
-  <br>
+
+
+
+                    {% elif note.get_time_diff < 73 %}
+                    <div class="card-body" style="background-color: none">
+                        <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                        <li>deadline:<font color="#9e6a21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                        <li>
+                         {% if note.priority == 'high' %}
+                            priority:<font color="#9e2121"> {{note.priority}}</font>
+                         {% elif note.priority == 'medium'%}
+                            priority:<font color="#9e6a21"> {{note.priority}}</font>
+                         {% elif note.priority == 'low' %}
+                            priority:<font color="#9a9e21"> {{note.priority}}</font>
+                         {% else %}
+                            priority:<font color="#5f9e21"> {{note.priority}}</font>
+                         {% endif %}
+                        </li>
+                    </div>
+
+                    {% else %}
+                    <div class="card-body">
+                        <font color="Darkslategray"><span style="font-size: 1.1em"> {{note.title}} </span></font><br>
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                        <li>deadline:<font color="#5f9e21"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                        <li>
+                         {% if note.priority == 'high' %}
+                            priority:<font color="#9e2121"> {{note.priority}}</font>
+                         {% elif note.priority == 'medium'%}
+                            priority:<font color="#9e6a21"> {{note.priority}}</font>
+                         {% elif note.priority == 'low' %}
+                            priority:<font color="#9a9e21"> {{note.priority}}</font>
+                         {% else %}
+                            priority:<font color="#5f9e21"> {{note.priority}}</font>
+                         {% endif %}
+                        </li>
+                    </div>
+
+
+                    {% endif %}
+
+
+                </div>
+
+
+<br>
+
+{% if note.created_by == user %}
+{% if note.is_done == False %}
+<div style="float: left">
+    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
+        edit</a>
+    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">
+        add image</a>
+    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
+        archive</a>&nbsp;
+</div><br>
+{% else %}
+<div style="float: left">
+    <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+        unarchive</a></div><br>
+{% endif %}
+{% endif %}
+<br>
+
+<div class="container">
+    <div class="card-group">
+        {% for image in note.images.all %}
+        <div class="image">
+            <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
+            <p>{{ image.description }}</p>
+            <hr>
+            {% if note.created_by == user %}
+            {% if note.is_done == False %}
+            <div style="float: left">
+                <a class="btn btn-outline-secondary">
+                    delete</a>
             </div>
-  </div>
+            <br>
+            {% endif %}
+            {% endif %}
+        </div>
+        {% empty %}
+        {% endfor %}
+        <br>
+    </div>
+</div>
 
 
+{% for comment in note.comments.all %}
 
-    {% for comment in note.comments.all %}
-
-  <div class="row justify-content-left">
-            <div class="comment">
-                <div class="date">{{ comment.created_date }}</div>
-                <strong>{{ comment.author }}</strong>
-                <p>{{ comment.text|linebreaks }}</p><hr>
-            </div>
-  </div>
-    {% empty %}
-        <br><p>No comments here yet.</p>
-    {% endfor %}
+<div class="row justify-content-left">
+    <div class="comment">
+        <div class="date">{{ comment.created_date }}</div>
+        <strong>{{ comment.author }}</strong>
+        <p>{{ comment.text|linebreaks }}</p>
+        <hr>
+    </div>
+</div>
+{% empty %}
+<br><p>No comments here yet.</p>
+{% endfor %}
 <p>New comment</p>
-    <form method="POST" class="post-form" style="width:400px">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="save btn btn-primary btn-sm">Send</button>
-    </form>
+<form method="POST" class="post-form" style="width:400px">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="save btn btn-primary btn-sm">Send</button>
+</form>
 {% else %}
 <p>The home container when not logged in</p>
 {% endif %}
