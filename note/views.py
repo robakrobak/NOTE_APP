@@ -4,11 +4,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormMixin
-
-from core.email_service import note_assign_mail
 # python
 from note.forms import NoteForm, CommentForm
 from note.models import Note
+from core.email_service import note_assign_mail
 
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
