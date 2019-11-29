@@ -9,6 +9,17 @@ from user.models import User
 
 
 class Note(models.Model):
+    LOW = 'L'
+    MEDIUM = 'M'
+    HIGH = 'H'
+    NO_PRIORITY = ''
+    priority_choices = [
+        (LOW, 'LOW'),
+        (MEDIUM, 'MEDIUM'),
+        (HIGH, 'HIGH'),
+        (NO_PRIORITY, 'NO_PRIORITY'),
+    ]
+
     title = models.CharField(max_length=128, null=False)
     note = models.CharField(max_length=4096)
     add_date = models.DateTimeField(auto_now_add=True, null=False)
@@ -17,6 +28,7 @@ class Note(models.Model):
     deadline = models.DateTimeField(null=False, blank=False, validators=[deadline_validator])
     is_done = models.BooleanField(default=False, blank=False)
     id_users = models.ManyToManyField(User, blank=True, related_name='users_pinned_to_note')
+    priority = models.CharField(max_length=11, choices=priority_choices, default=NO_PRIORITY)
 
     def __str__(self):
         return self.title

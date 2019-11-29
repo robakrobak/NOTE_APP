@@ -1,14 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail
+from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView, UpdateView, FormMixin
-from django.db.models import Q
-from django.http import HttpResponseRedirect
+
+from core.email_service import note_assign_mail
 # python
 from note.forms import NoteForm, CommentForm
 from note.models import Note
-from core.email_service import note_assign_mail
 
 
 class NoteCreateView(LoginRequiredMixin, CreateView):
@@ -73,6 +73,7 @@ def change_status(request, pk, done):
         return redirect('notes/add/')
 
 
+
 class NoteDetailView(DetailView, FormMixin):
     model = Note
     template_name = "note_detail.html"
@@ -82,6 +83,7 @@ class NoteDetailView(DetailView, FormMixin):
     def get_queryset(self):
         if self.request.user.is_authenticated:
             queryset = super().get_queryset()
+            # <<<<<<< HEAD
             return queryset.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user),
                                    pk=self.kwargs['pk']).distinct()
         else:
@@ -99,3 +101,8 @@ class NoteDetailView(DetailView, FormMixin):
         form.instance.note = self.get_object()
         form.save()
         return HttpResponseRedirect(self.request.path_info)
+# =======
+#             return queryset.filter(Q(id_users=self.request.user) | Q(created_by=self.request.user), pk=self.kwargs['pk']).distinct()
+#         else:
+#             return Note.objects.none()
+# >>>>>>> ac8932387aaca1654696984b7ed50624c5aa233b

@@ -3,6 +3,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<<<<<<< HEAD
 <h4>{{note.title}}</h4>
 Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
     | Deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> Note status: {{ note.is_done|yesno:"Is done, Is open" }}
@@ -12,6 +13,9 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
           {% endfor %}</td>
     {% endif %}
+    <td>
+        {% for priority in
+    </td>
 <br>
 <br>
 
@@ -44,6 +48,20 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
         {{ form|crispy }}
         <button type="submit" class="save btn btn-primary btn-sm">Send</button>
     </form>
+=======
+<h5><font color="green">{{note.title}}</font></h5><br>
+<p>Priority: {{note.priority|}}</p>
+<p>Created on: {{note.add_date|date:'Y-m-d' }}</p>
+<p>Created by: {{note.created_by}}</p>
+<p>Deadline: {{note.deadline|date:'Y-m-d' }}</p>
+<p>Note status: {{ note.is_done|yesno:"Is done, Is open" }}</p>
+<p>Users added to note:
+      <td>{% for user_id in note.id_users.all %}
+             {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
+          {% endfor %}</td>
+</p>
+<p>Note: {{note.note}}</p>
+>>>>>>> ac8932387aaca1654696984b7ed50624c5aa233b
 {% else %}
 <p>The home container when not logged in</p>
 {% endif %}
