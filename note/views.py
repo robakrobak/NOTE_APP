@@ -115,9 +115,11 @@ class ImageCreateView(LoginRequiredMixin, CreateView):
         finally:
             return redirect('note_detail', pk=self.kwargs['pk'])
 
-#
-# def delete_image(request, id, pk):
-#     note = Note.objects.get(pk=pk, created_by=self.request.user)
-#     query = ImageToNote.objects.get(pk=id, note=note)
-#     query.delete()
-#     return HttpResponse("Deleted!")
+
+def delete_image(request, imgpk, pk):
+    try:
+        query = ImageToNote.objects.get(pk=imgpk, created_by=request.user)
+        print(query)
+        query.delete()
+    finally:
+        return redirect('note_detail', pk=pk)

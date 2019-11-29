@@ -64,6 +64,7 @@ class ImageToNote(models.Model):
     note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='images')
     description = models.CharField(max_length=120)
     image = models.ImageField(upload_to='media', blank=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.note.__str__() + 'image' + self.description
