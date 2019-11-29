@@ -3,11 +3,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h4>{{note.title}}</h4>
-Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
-    | Deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> Note status: {{ note.is_done|yesno:"Is done, Is open" }}
+<h4><font color="Darkslategray">| <b>{{note.title}}</b> |</font></h4>
+created by: <font color="Darkslategray"><b>{{note.created_by}}</b></font> | created on: {{note.add_date|date:'Y-m-d' }}
+    | deadline: {{note.deadline|date:'Y-m-d H:i' }}<br> note status: {{ note.is_done|yesno:"Is done, Is open" }}
     {% if note.id_users.all %}
-     | Users added to note:
+     | users added to note:
       {% for user_id in note.id_users.all %}
              {{ user_id.username }}{% if forloop.last %}.{% else %}, {% endif %}
 

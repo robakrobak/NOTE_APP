@@ -27,30 +27,33 @@ Hi {{ user.username }}!
         <hr>
         {% for note in filter.qs %}
         <hr>
-        <div class="row justify-content-center">
+        <div class="row justify-content-left">
             <div class="col-6">
                 <a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">
                     <div class="card">
 
                     {% if note.get_time_diff < 25 %}
                         <div class="card-body" style="background-color: #ffe8e8">
-                                {{note.title}} <br>
-                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
-                        <li>  <font color="#a80a02"><b>Deadline: {{note.deadline|date:'Y-m-d H:i' }}</b></font></li>
+                            | <font color="Darkslategray">{{note.title}} </font>|<br>
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                        <li>deadline:<font color="#a80a02"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                        <li>priority:<font color="Darkslategray"> {{note.priority}}</font></li>
 
                         </div>
 
                     {% elif note.get_time_diff < 73 %}
                         <div class="card-body" style="background-color: #fffacf">
-                                {{note.title}} <br>
-                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
-                        <li>  <font color="f2a200">Deadline: {{note.deadline|date:'Y-m-d H:i' }}</font></li>
+                                | <font color="Darkslategray"> {{note.title}} |</font><br>
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                        <li>deadline:<font color="f2a200"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                        <li>priority:<font color="Darkslategray"> {{note.priority}}</font></li>
                         </div>
                     {% else %}
                         <div class="card-body">
-                                {{note.title}} <br>
-                        <li>Created by: <font color="green">{{note.created_by}} | </font></li>
-                        <li>  Deadline: {{note.deadline|date:'Y-m-d H:i' }}</li>
+                                |<font color="Darkslategray"> {{note.title}} </font>|<br>
+                        <li>created by:<font color="Darkslategray"> {{note.created_by}} </font>|</li>
+                        <li>deadline:<font color="Darkslategray"> {{note.deadline|date:'Y-m-d H:i' }} </font>|</li>
+                        <li>priority:<font color="Darkslategray"> {{note.priority}}</font></li>
                         </div>
 
 
