@@ -14,22 +14,6 @@ created by: <font color="Darkslategray"><b>{{note.created_by}}</b></font> | crea
           {% endfor %}
 
     {% endif %}<br>
-{% if note.created_by == user %}
-
-        {% if note.is_done == False %}
-                <div style="float: left">
-                    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
-                        edit</a>
-                    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
-                        archive</a>&nbsp;
-                </div><br>
-        {% else %}
-            <div style="float: left">
-            <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
-            unarchive</a></div><br>
-        {% endif %}
-    {% endif %}
-<br>
 
 
 
@@ -43,7 +27,43 @@ created by: <font color="Darkslategray"><b>{{note.created_by}}</b></font> | crea
     </div>
 </div>
 <br>
-
+{% if note.created_by == user %}
+        {% if note.is_done == False %}
+                <div style="float: left">
+                    <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
+                        edit</a>
+                    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">
+                        add image</a>
+                    <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
+                        archive</a>&nbsp;
+                </div><br>
+        {% else %}
+            <div style="float: left">
+            <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
+            unarchive</a></div><br>
+        {% endif %}
+    {% endif %}
+<br>
+  <div class="container">
+      <div class="card-group">
+          {% for image in note.images.all %}
+                  <div class="image">
+                      <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
+                      <p>{{ image.description }}</p><hr>
+                      {% if note.created_by == user %}
+                          {% if note.is_done == False %}
+                              <div style="float: left">
+                                  <a class="btn btn-outline-secondary">
+                                        delete</a>
+                              </div><br>
+                          {% endif %}
+                      {% endif %}
+                    </div>
+    {% empty %}
+    {% endfor %}
+  <br>
+            </div>
+  </div>
 
 
 
