@@ -9,13 +9,16 @@ from note.models import Note, Comment
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ['title', 'note', 'deadline', 'id_users']
+        fields = ['title', 'note', 'deadline', 'id_users', 'priority']
         labels = {'id_users': 'Users added to note'}
+        priority_choices = {'priority': 'Notes priority'}
 
         widgets = {
             'deadline': DateTimePickerInput(),  # default date-format %m/%d/%Y will be used
             'note': forms.Textarea(),
         }
+        priority = forms.ChoiceField(choices=priority_choices, label="", initial="NO_PRIORITY", widget=forms.Select(),
+                                     required=True)
 
 
 class CommentForm(forms.ModelForm):
