@@ -14,7 +14,11 @@
         .note-detail-link:hover {
             text-decoration: none;
             color: #000000;
-
+        }
+        ul#note-list {
+            padding: 0;
+            margin: 0;
+        }
 
 
     </style>
@@ -28,7 +32,6 @@ Archive
 <ul id="note-list">
     <hr>
     {% for note in filter.qs %}
-    <hr>
     <div class="row justify-content-left">
         <div class="col-6">
             <a href="{% url 'note_detail' pk=note.id %}" class="note-detail-link">
@@ -36,7 +39,7 @@ Archive
                     <div class="card-body">
                         {{note.title}}
                         <br></font>
-                        <li>Created by: <font color="green">{{note.created_by}}</font> |</li>
+                        <li>Created by: <font color="green">{{note.created_by}}</font> <span class="greyOut">|</span></li>
                         <li> Archived</li>
                     </div>
                 </div>

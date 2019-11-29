@@ -16,63 +16,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
         crossorigin="anonymous"></script>
-
-    <style type="text/css">
-        .asteriskField {
-            display: none;
-        }
-        form .alert {
-            font-size: 12px;
-        }
-        form .alert ul li {
-            list-style: none;
-        }
-
-        form .alert ul {
-            padding: 0;
-            margin: 0;
-        }
-        #awatar{
-            border-radius: 8px;
-        }
-
-        html * {
-            font-family: font-family: 'Open Sans', sans-serif;
-            font-size: 15px
-        }
-
-         .priority span {
-            color: #5f9e21;
-        }
-
-        .priority span.high {
-            color: #9e2121;
-        }
-
-        .priority span.medium {
-            color: #9e6a21;
-            }
-
-        .priority span.low {
-            color: #9a9e21;
-        }
-
-
-        .deadlineNow {
-            color: #9e2121;
-        }
-        .deadlineSoon {
-            color: #9e6a21;
-        }
-
-        .deadlineOk {
-            color: #5f9e21;
-        }
-
-
-
-    </style>
-
+{% include "style.css" %}
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
@@ -90,9 +34,6 @@
             {% if user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-
-
-
 
                 <form class="form-inline my-2 my-lg-0 mr-0">
                     <li class="nav-item my-2 my-lg-0 mr-2">

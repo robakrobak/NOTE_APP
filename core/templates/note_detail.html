@@ -4,113 +4,123 @@
 {% block content %}
 {% if user.is_authenticated %}
 
-
-<div class="card-body">
-    <li>created by:<font color="Darkslategray"> {{note.created_by}} </font></li>
-    <li>deadline:
-        {% if note.get_time_diff < 25 %} <span class="deadlineNow"> {{note.deadline|date:'Y-m-d H:i' }} </span>
-        {% elif note.get_time_diff < 73 %} <span class="deadlineSoon"> {{note.deadline|date:'Y-m-d H:i' }} </span>
-        {% else %} <span class="deadlineOk"> {{note.deadline|date:'Y-m-d H:i' }} </span>
-        {% endif %}
-    </li>
-    <li class="priority">
-        priority:
-        <span class="{{note.priority}}">
-                         {{note.priority}}
-                    </span>
-
-    </li>
-    <li>{% if note.id_users.all %}
-        users added to note:<br>
-        {% for user in note.id_users.all %}
-        {{ user.username }}
-        <img src="{{ user.profile.awatar.url }}" height="40" id="awatar"> |
-        {% endfor %}
-
-        {% endif %}<br>
-
-</div>
-
-<br>
-<font color="Darkslategray"><span style="font-size: 1.1em"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{note.title}} </span></font>
+<!-- Note -->
 <div class="row justify-content-left">
     <div class="col-7">
         <div class="card">
             <div class="card-body">
-                <h5>{{note.note}}</h5>
+                <h2 style="margin-bottom: 10px"> {{note.title}} </h2>
+
+                <p style="margin-bottom: 0;">{{note.note}}</p>
+
+                <!-- Images -->
+                <div class="card-group" style="margin-top: 20px">
+                    {% for image in note.images.all %}
+                    <div class="image" style="margin-right:10px">
+                        <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
+                        <p class="smalltext">{{ image.description }}</p>
+                        {% if note.created_by == user %}
+                        {% if note.is_done == False %}
+                        <a href="{% url 'image_delete' pk=note.id imgpk=image.pk %}"
+                           class="btn btn-outline-secondary small">delete</a>
+
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    {% endfor %}
+
+
+                    {% if note.created_by == user %}
+                    {% if note.is_done == False %}
+                    <div class="image" style="margin-right:10px">
+                        <div class="image">
+                            <div style="border: 1px solid #ccc; display: block; width: 100px; height: 100px"></div>
+                        </div>
+                        <p class="smalltext">&nbsp;</p>
+
+                        <a href="{% url 'image_add' pk=note.id %}"
+                           class="btn btn-outline-secondary small">add image</a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+
+
+                </div>
+
+                <hr>
+                <!-- Note details -->
+                <div class="card-body">
+                    <li>created by:<font color="Darkslategray"> {{note.created_by}} </font></li>
+                    <li>deadline:
+                        {% if note.get_time_diff < 25 %} <span
+                                class="deadlineNow"> {{note.deadline|date:'Y-m-d H:i' }} </span>
+                        {% elif note.get_time_diff < 73 %} <span class="deadlineSoon"> {{note.deadline|date:'Y-m-d H:i' }} </span>
+                        {% else %} <span class="deadlineOk"> {{note.deadline|date:'Y-m-d H:i' }} </span>
+                        {% endif %}
+                    </li>
+                    <li class="priority">
+                        priority:
+                        <span class="{{note.priority}}">{{note.priority}}</span>
+                    </li>
+                    <li>{% if note.id_users.all %}
+                        users added to note:<br>
+                        {% for user in note.id_users.all %}
+
+                        <img src="{{ user.profile.awatar.url }}" height="40" id="awatar" style="margin-right: 5px">
+                        <span style="margin-right: 20px">{{ user.username }}</span>
+                        {% endfor %}
+
+                        {% endif %}
+                    </li>
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
-<br>
-<div class="row justify-content-left">
-
-    <div class="col-7">
-        <div class="card">
 
 
-        </div>
-    </div>
-</div>
-<br>
-
+<!-- Buttons -->
 {% if note.created_by == user %}
 {% if note.is_done == False %}
 <div style="float: left">
     <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
-        edit</a>
-    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">
-        add image</a>
+        edit note</a>
+<!--    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">add image</a> -->
     <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
-        archive</a>&nbsp;
-</div><br>
+        archive note</a>&nbsp;
+</div>
+<br/><br/>
 {% else %}
 <div style="float: left">
     <a href="{% url 'mark_as' pk=note.id done=0 %}" class="btn btn-outline-secondary btn-sm" style="float: right">
         unarchive</a></div><br>
 {% endif %}
 {% endif %}
-<br>
-
-<div class="container">
-    <div class="card-group">
-        {% for image in note.images.all %}
-        <div class="image">
-            <div class="image"><img src="{{ image.image.url }}" height="100" id="image"></div>
-            <p>{{ image.description }}</p>
-            <hr>
-            {% if note.created_by == user %}
-            {% if note.is_done == False %}
-            <a href="{% url 'image_delete' pk=note.id imgpk=image.pk %}" class="btn btn-outline-secondary">delete</a>&nbsp;
-            <br>
-            {% endif %}
-            {% endif %}
-        </div>
-        {% empty %}
-        {% endfor %}
-        <br>
-    </div>
-</div>
+<br/>
 
 
+<!-- Comments -->
+<h2>Comments</h2>
 {% for comment in note.comments.all %}
-
 <div class="row justify-content-left" style="margin-left: 30px">
     <div class="comment">
-        <div class="date">{{ comment.created_date }}</div>
+        <div class="date smalltext">{{ comment.created_date }}</div>
         <strong>{{ comment.author }}</strong>
         <p>{{ comment.text|linebreaks }}</p>
         <hr>
     </div>
 </div>
 {% empty %}
-<br><p>No comments here yet.</p>
+<p>No comments here yet.</p>
 {% endfor %}
-<p>New comment</p>
-<form method="POST" class="post-form" style="width:400px">
+<p>Add new comment</p>
+<form method="POST" class="post-form" style="width:400px;">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="save btn btn-primary btn-sm">Send</button>
+    <button type="submit" class="save btn btn-primary btn-sm">Add</button>
 </form>
 {% else %}
 <p>The home container when not logged in</p>
