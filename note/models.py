@@ -46,3 +46,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class ImageToNote(models.Model):
+    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='images')
+    description = models.CharField(max_length=120)
+    image = models.ImageField(upload_to='media', blank=False)
+
+    def __str__(self):
+        return self.note.__str__() + 'image' + self.description

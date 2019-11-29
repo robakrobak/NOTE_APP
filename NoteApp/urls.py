@@ -21,7 +21,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from core.views import NotesListView, logout_view, NotesListArchiveView
-from note.views import NoteCreateView, NoteDetailView, change_status, NoteUpdateView
+from note.views import NoteCreateView, NoteDetailView, change_status, NoteUpdateView, ImageCreateView
 from user.views import signup, login_view, UserProfileView, PasswordResetViewWithAlternativeMail, change_password
 
 
@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^note/add/$', NoteCreateView.as_view(), name='add_note'),
     path('note/<int:pk>/', NoteDetailView.as_view(), name='note_detail'),
     path('note/<int:pk>/edit', NoteUpdateView.as_view(), name='note_edit'),
+    path('note/<int:pk>/image', ImageCreateView.as_view(), name='image_add'),
     path('notes/<int:pk>/<int:done>', change_status, name='mark_as'),
     url(r'^password/$', change_password, name='change_password'),
 ]

@@ -1,9 +1,7 @@
 from bootstrap_datepicker_plus import DateTimePickerInput
 from django import forms
-from django.forms.widgets import Textarea
 
-
-from note.models import Note, Comment
+from note.models import *
 
 
 class NoteForm(forms.ModelForm):
@@ -27,3 +25,9 @@ class CommentForm(forms.ModelForm):
         # widgets = {
         #     'text': forms.Textarea(),
         # }
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = ImageToNote
+        fields = ['description', 'image']

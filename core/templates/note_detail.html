@@ -15,11 +15,12 @@ Created by: {{note.created_by}} | Created on: {{note.add_date|date:'Y-m-d' }}
 
     {% endif %}<br>
 {% if note.created_by == user %}
-
         {% if note.is_done == False %}
                 <div style="float: left">
                     <a href="{% url 'note_edit' pk=note.id %}" class="btn btn-outline-secondary">
                         edit</a>
+                    <a href="{% url 'image_add' pk=note.id %}" class="btn btn-outline-secondary">
+                        add image</a>
                     <a href="{% url 'mark_as' pk=note.id done=1 %}" class="btn btn-outline-secondary">
                         archive</a>&nbsp;
                 </div><br>
