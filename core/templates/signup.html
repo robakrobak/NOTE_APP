@@ -5,33 +5,32 @@
 <html>
 
 <head>
-  <style type="text/css">
+    <style type="text/css">
     .form-text text-muted {
       display: block;
     }
-
-  </style>
+    </style>
 
 </head>
 
 <body>
-  <div class="row justify-content-center">
+<div class="row justify-content-center">
     <div class="col-5">
-      <div class="card">
-        <div class="card-body">
-          <h2>Register</h2>
-          <form method="POST" novalidate class= "sign-up-form">
+        <div class="card">
+            <div class="card-body">
+                <h2>Register</h2>
+                <form method="POST" novalidate class="sign-up-form">
 
-              {% csrf_token %}
-              {% bootstrap_form form %}
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
 
 
-              <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 </body>
 
 </html>

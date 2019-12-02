@@ -15,54 +15,53 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-        crossorigin="anonymous"></script>
-{% include "style.css" %}
+            crossorigin="anonymous"></script>
+    {% include "style.css" %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
-        <div class="container">
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+    <div class="container">
         <a class="navbar-brand" href="{% url 'home' %}">
             <img src="/media/awatar/dingdong.svg" height="32">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
 
 
-
-            {% if user.is_authenticated %}
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {% if user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
 
                 <form class="form-inline my-2 my-lg-0 mr-0">
                     <li class="nav-item my-2 my-lg-0 mr-2">
-                    <a class="btn btn-outline-secondary" href="{% url 'add_note' %} ">add note</a>
+                        <a class="btn btn-outline-secondary" href="{% url 'add_note' %} ">add note</a>
                     </li>
                 </form>
 
             </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ user.username }}
-                            {% if user.profile.awatar %}
-                            <img src="{{ user.profile.awatar.url }}" height="40" id="awatar">
-                            {% endif %}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'archive.html' %} ">archive</a>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                        {% if user.profile.awatar %}
+                        <img src="{{ user.profile.awatar.url }}" height="40" id="awatar">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'archive.html' %} ">archive</a>
 
-                            <a class="dropdown-item" href="{% url 'change_password' %}">change password</a>
-                            {% if user.pk %}
-                            <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">user profile</a>
-                            {% endif %}
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'logout' %}">log out</a>
-                        </div>
-                    </li>
-                </ul>
+                        <a class="dropdown-item" href="{% url 'change_password' %}">change password</a>
+                        {% if user.pk %}
+                        <a class="dropdown-item" href="{% url 'user_profile' user.pk %}">user profile</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">log out</a>
+                    </div>
+                </li>
+            </ul>
             {% else %}
             <form class="form-inline my-2 my-lg-0">
                 <a href="{% url 'login' %}" class="btn btn-outline-secondary">log in</a>
@@ -79,8 +78,9 @@
     <h6></h6>
 
     {% else %}
-    <h5>Improve your work experience with Ding<font color="green">D</font>ong.</h5>
-    <h6>You are not logged in</h6>
+    <p class="entry">
+        Improve your work experience with DingDong.<br>
+        You are not logged in.</p>
     {% endif %}
     <hr>
 
