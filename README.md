@@ -1,3 +1,4 @@
+
 ## NOTE APP - the web application
 
 #### Introduction - the project's aim
@@ -88,7 +89,7 @@ python manage.py createsuperuser
 9.Starting server
 
 ``
-python migrate.py runserver
+python manage.py runserver
 ``
 
 
